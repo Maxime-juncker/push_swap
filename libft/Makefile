@@ -61,6 +61,7 @@ SRCS := $(addprefix $(SRCS_D), $(SRCS))
 # compiler settings
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I$(INCLUDES_D)
+MAKEFLAGS += --no-print-directory
 
 # commands
 RM = rm -fr
@@ -78,13 +79,10 @@ all : $(BIN_D)$(NAME)
 $(BIN_D)$(NAME): $(OBJ) | $(BIN_D)
 	@echo "$(GREEN)[LINKING]: $(NAME)$(RESET)"
 	@ar rcs $(BIN_D)$(NAME) $(OBJ)
-	@echo "$(GREEN)[SUCCESS]$(RESET)"
-
 
 $(OBJ_D)%.o: $(SRCS_D)%.c | $(OBJ_D)
 	@echo "$(BLUE)[COMPILING]: $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
-
 
 $(OBJ_D):
 	@echo "$(YELLOW)[CREATING]: $(OBJ_D)$(RESET)"
