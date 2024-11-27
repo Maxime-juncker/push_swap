@@ -1,20 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/18 12:19:24 by mjuncker          #+#    #+#              #
-#    Updated: 2024/11/27 10:04:39 by mjuncker         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = push_swap.out
 CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES_D)
 MAKEFLAGS += --no-print-directory
 
-SRC = push_swap.c
+SRC = push_swap.c push_swap_instruction.c
 OBJ = $(SRC:.c=.o)
 
 OBJ_D = obj/
@@ -34,10 +22,11 @@ BLUE = \033[34m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft
+$(NAME): $(OBJ)
+	@echo "$(YELLOW)[MAKE]: libft$(RESET)"
 	@$(MAKE)  -C libft
 	@$(CC) $(CFLAGS) $(OBJ) libft/bin/libft.a -o $(NAME)
-	@echo "$(BLUE)[COMPILING]: $@$(RESET)"
+	@echo "$(YELLOW)[CREATING EXE]: $@$(RESET)"
 	@echo "$(GREEN)[SUCCESS]: $@$(RESET)"
 
 $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h | $(OBJ_D)
