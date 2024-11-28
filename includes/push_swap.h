@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/11/27 14:04:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:23:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ typedef struct s_stack
 }	t_stack;
 
 // intruction
-void	swap_a(t_stack *a);
-void	swap_b(t_stack *b);
-void	push_a(t_stack *a, t_stack *b);
-void	push_b(t_stack *a, t_stack *b);
-void	rotate_a(t_stack *a);
+void	swap_stack(t_stack *s);
+void	push_stack(t_stack *from, t_stack *dest);
+void	rotate_stack(t_stack *s);
+void	rrotate_stack(t_stack *s);
 
 #endif //PUSH_SWAP_H

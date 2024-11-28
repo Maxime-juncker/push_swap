@@ -6,88 +6,61 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:37 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/11/27 15:17:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:24:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap_a(t_stack *a)
+void	swap_stack(t_stack *s)
 {
 	int	tmp;
 
-	if (a->len < 2)
+	if (s->len < 2)
 		return ;
-	tmp = a->values[a->len - 1];
-	a->values[a->len - 1] = a->values[a->len - 2];
-	a->values[a->len - 2] = tmp;
+	tmp = s->values[s->len - 1];
+	s->values[s->len - 1] = s->values[s->len - 2];
+	s->values[s->len - 2] = tmp;
 }
-void	swap_b(t_stack *b)
+
+
+void	push_stack(t_stack *from, t_stack *dest)
 {
-	int	tmp;
-
-	if (b->len < 2)
+	if (from->len == 0)
 		return ;
-	tmp = b->values[b->len - 1];
-	b->values[b->len - 1] = b->values[b->len - 2];
-	b->values[b->len - 2] = tmp;
+	dest->len++;
+	dest->values[dest->len - 1] = from->values[from->len - 1];
+	from->values[from->len - 1] = 0;
+	from->len--;
 }
 
-void	push_a(t_stack *a, t_stack *b)
-{
-	if (b->len == 0)
-		return ;
-	a->len++;
-	a->values[a->len - 1] = b->values[b->len - 1];
-	b->values[b->len - 1] = 0;
-	b->len--;
-}
-
-void	push_b(t_stack *a, t_stack *b)
-{
-	if (a->len == 0)
-		return ;
-	b->len++;
-	b->values[b->len - 1] = a->values[a->len - 1];
-	a->values[a->len - 1] = 0;
-	a->len--;
-}
-
-/*
-	5
-	8
-	6
-*/
-
-void	rotate_a(t_stack *a)
+void	rotate_stack(t_stack *s)
 {
 	int	tmp;
 	int	i;
 
 	i = 0;
-	(void)tmp;
-	while (i < a->len)
+	while (i < s->len)
 	{
-		tmp = a->values[a->len - i];
-		a->values[a->len - i] = a->values[a->len - i - 1];
-		a->values[a->len - i - 1] = tmp;
-		i++;
+		tmp = s->values[(i + 1) % s->len];
+		s->values[(i + 1) % s->len] = s->values[i % s->len];
+		s->values[(i) % s->len] = tmp;
+		i += 2;
 	}
-	ft_printf("\n\n");
 }
 
-// ? maybe reverse_rotate ???
-// void	rotate_a(t_stack *a)
-// {
-// 	int	tmp;
-// 	int	i;
+void	rrotate_stack(t_stack *s)
+{
+	int	tmp;
+	int	i;
 
-// 	i = 0;
-// 	while (i < a->len - 1)
-// 	{
-// 		tmp = a->values[i % (a->len)];
-// 		a->values[i % a->len] = a->values[(i+1) % a->len];
-// 		a->values[(i+1) % a->len] = tmp;
-// 		i++;
-// 	}
-// }
+	i = 0;
+	while (i < s->len - 1)
+	{
+		tmp = s->values[i % (s->len)];
+		s->values[i % s->len] = s->values[(i+1) % s->len];
+		s->values[(i+1) % s->len] = tmp;
+		i++;
+	}
+}
+

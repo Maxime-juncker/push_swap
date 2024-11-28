@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/11/27 14:15:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/11/28 10:26:15 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_stack	*create_stack(char **values, int len)
 	if (values == NULL)
 		return (stack);
 	i = 0;
-	while (i < len) // ! si prbl alors ajouter un param val_len pour la while
+	while (i < len)
 	{
 		stack->values[len - i - 1] = ft_atoi(values[i]);
 		i++;
@@ -118,7 +118,6 @@ int	main(int argc, char **argv)
 		return (-1);
 	}
 	print_stacks(a, b);
-	// print_arr(a->values, a->len, "a");
 	if (check_duplicate(a))
 	{
 		ft_printf("[error]: duplicate detected\n");
@@ -126,13 +125,21 @@ int	main(int argc, char **argv)
 		cleanup_stack(b);
 		exit(1);
 	}
-
-	swap_a(a);
+	swap_stack(a);
 	print_stacks(a, b);
-	push_b(a, b);
-	push_b(a, b);
-	push_b(a, b);
+	push_stack(a, b);
+	push_stack(a, b);
+	push_stack(a, b);
 	print_stacks(a, b);
-	rotate_a(a);
+	rotate_stack(a);
+	rotate_stack(b);
+	print_stacks(a, b);
+	rrotate_stack(a);
+	rrotate_stack(b);
+	print_stacks(a, b);
+	swap_stack(a);
+	push_stack(b, a);
+	push_stack(b, a);
+	push_stack(b, a);
 	print_stacks(a, b);
 }
