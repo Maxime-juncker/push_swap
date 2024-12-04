@@ -2,7 +2,10 @@ NAME = push_swap.out
 CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES_D)
 MAKEFLAGS += --no-print-directory
 
-SRC = push_swap.c push_swap_instruction.c
+SRC =	push_swap.c					\
+		push_swap_instruction.c		\
+		solver.c					\
+
 OBJ = $(SRC:.c=.o)
 
 OBJ_D = obj/
@@ -14,11 +17,13 @@ OBJ := $(addprefix $(OBJ_D), $(OBJ))
 SRCS := $(addprefix $(SRCS_D), $(SRCS))
 
 # colors
-RED = \033[31m
-GREEN = \033[32m
-YELLOW = \033[33m
-RESET = \033[0m
-BLUE = \033[34m
+RED 	= \033[31m
+GREEN 	= \033[32m
+YELLOW 	= \033[33m
+RESET 	= \033[0m
+BLUE 	= \033[34m
+
+RM = rm -fr
 
 all: $(NAME)
 
@@ -37,7 +42,7 @@ $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h | $(OBJ_D)
 clean:
 	@echo "$(RED)[CLEAN]: obj files$(RESET)"
 	@$(MAKE) clean -C ./libft
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ_D)
 
 .PHONY: fclean
 fclean: clean

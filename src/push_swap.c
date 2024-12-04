@@ -6,25 +6,11 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/11/28 10:26:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:58:51 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	print_arr(int *arr, int len, char *name)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("%s: [", name);
-	while (i < len - 1)
-	{
-		ft_printf("%d, ", arr[i]);
-		i++;
-	}
-	ft_printf("%d]\n", arr[i]);
-}
 
 void	*cleanup_stack(t_stack *stack)
 {
@@ -57,7 +43,7 @@ int	check_duplicate(t_stack *stack)
 	return (0);
 }
 
-t_stack	*create_stack(char **values, int len)
+t_stack	*create_stack(char **values, int len, const char name)
 {
 	t_stack	*stack;
 	int		i;
@@ -65,6 +51,7 @@ t_stack	*create_stack(char **values, int len)
 	stack = ft_calloc(1, sizeof(t_stack));
 	if (stack == NULL)
 		return (NULL);
+	stack->name = name;
 	stack->values = ft_calloc(len, sizeof(int));
 	if (stack->values == NULL)
 		return (cleanup_stack(stack));
@@ -81,65 +68,40 @@ t_stack	*create_stack(char **values, int len)
 	return (stack);
 }
 
-void	print_stacks(t_stack *a, t_stack *b)
+void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 {
 	int	i;
 
 	i = 0;
-	while (i < a->len || i < b->len)
+	ft_printf("----------------------------------------------------\n");
+	ft_printf("Exec %s: \n", instruction);
+	while ((a != NULL && i < a->len) || (b != NULL && i < b->len))
 	{
-		if (i < a->len)
+		if (a != NULL && i < a->len)
 			ft_printf("%d", a->values[a->len - i - 1]);
+		else
+			ft_printf(" ");
 		ft_printf(" ");
-		if (i < b->len)
+		if (b != NULL && i < b->len)
 			ft_printf("%d", b->values[b->len - i - 1]);
 		ft_printf("\n");
 		i++;
 	}
-	ft_printf("_ _\na b \t len a: %d, len b: %d\n\n", a->len, b->len);
+	if (a && b)
+		ft_printf("_ _\na b \t len a: %d, len b: %d\n\n", a->len, b->len);
+	else if (a)
+		ft_printf("_ _\na b \t len a: %d\n\n", a->len);
+	else if (b)
+		ft_printf("_ _\na b \t len b: %d\n\n", b->len);
+
 }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*a;
-	t_stack	*b;
-
 	if (argc == 0)
 		return (0);
-	argv++;
 	argc--;
-	a = create_stack(argv, argc);
-	if (!a)
-		return (-1);
-	b = create_stack(NULL, argc);
-	if (!b)
-	{
-		cleanup_stack(a);
-		return (-1);
-	}
-	print_stacks(a, b);
-	if (check_duplicate(a))
-	{
-		ft_printf("[error]: duplicate detected\n");
-		cleanup_stack(a);
-		cleanup_stack(b);
-		exit(1);
-	}
-	swap_stack(a);
-	print_stacks(a, b);
-	push_stack(a, b);
-	push_stack(a, b);
-	push_stack(a, b);
-	print_stacks(a, b);
-	rotate_stack(a);
-	rotate_stack(b);
-	print_stacks(a, b);
-	rrotate_stack(a);
-	rrotate_stack(b);
-	print_stacks(a, b);
-	swap_stack(a);
-	push_stack(b, a);
-	push_stack(b, a);
-	push_stack(b, a);
-	print_stacks(a, b);
+	argv++;
+	return (start_solver(argc, argv));
+
 }

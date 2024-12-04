@@ -95,14 +95,12 @@ $(BIN_D):
 .PHONY: clean
 clean:
 	@echo "$(RED)[CLEAN]: obj files$(RESET)"
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ_D)
 
 .PHONY: fclean
 fclean: clean
 	@echo "$(RED)[CLEAN]: binaries$(RESET)"
-	@$(RM) $(BIN_D)$(NAME)
-	@$(RM) $(BIN_D)a.out
-	@$(RM) $(BIN_D)libft.so
+	@$(RM) $(BIN_D)
 
 .PHONY: re
 re:
