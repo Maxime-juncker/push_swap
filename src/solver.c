@@ -4,8 +4,6 @@ int	start_solver(int stack_len, char **values)
 {
 	t_stack	*a;
 	t_stack	*b;
-	int	i = 0;
-	int	len;
 
 	a = create_stack(values, stack_len, 'a');
 	if (!a)
@@ -24,12 +22,8 @@ int	start_solver(int stack_len, char **values)
 		exit(1);
 	}
 	// print_stacks(a, b, "init a and b");
-	len = a->len;
-	while (i < len)
-	{
-		ft_quick_sort(a, b, i);
-		i++;
-	}
+	ft_quick_sort(a, b, a->len - 1);
+	// print_stacks(a, b, "end");
 	return (0);
 }
 
@@ -51,21 +45,34 @@ void set_pivot_at_end(t_stack *a, t_stack *b, int pivot_idx)
 
 void	ft_quick_sort(t_stack *a, t_stack *b, int pivot_idx)
 {
+	int	nb_pop = 0; // usefull to know how many item do we need to push back in
 	int	pivot = a->values[pivot_idx];
-	// int	result = 0;
-	// ft_printf("pivot is: %d (%d idx)\n", a->values[pivot_idx], pivot_idx);
-	set_pivot_at_end(a, b, pivot_idx);
-	while (b->values[b->len - 1] != pivot)
-	{
-		if (b->values[b->len - 1] < pivot)
-			push_stack(b, a);
-		else
-			rotate_stack(b);
-	}
-	// print_stacks(a, b, "sorted based on pivot");
-	while (b->len > 0)
+	int	i = 0;
+	// check for numbers > to pivot
+	push_stack(a, b);
+
+	// set pivot to end;
+	rotate_stack(b);
+
+	while (b->values[b->len - 1] > pivot)
 	{
 		push_stack(b, a);
+		nb_pop++;
 	}
-	// print_stacks(a, b, "sorted");
+	rrotate_stack(b);
+	while (i < nb_pop)
+	{
+		push_stack(a, b);
+		i++;
+	}
+
+	if (a->len > 0)
+		ft_quick_sort(a, b, a->len - 1);
+	else
+	{
+		while (b->len > 0)
+		{
+			push_stack(b, a);
+		}
+	}
 }
