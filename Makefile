@@ -1,4 +1,4 @@
-NAME = push_swap.out
+NAME = push_swap
 CFLAGS = -Wall -Wextra -Werror -g3 $(INCLUDES_D)
 MAKEFLAGS += --no-print-directory
 

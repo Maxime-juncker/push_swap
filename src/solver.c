@@ -4,6 +4,8 @@ int	start_solver(int stack_len, char **values)
 {
 	t_stack	*a;
 	t_stack	*b;
+	int	i = 0;
+	int	len;
 
 	a = create_stack(values, stack_len, 'a');
 	if (!a)
@@ -16,13 +18,18 @@ int	start_solver(int stack_len, char **values)
 	}
 	if (check_duplicate(a))
 	{
-		ft_printf("[error]: duplicate detected\n");
+		ft_printf("error\n");
 		cleanup_stack(a);
 		cleanup_stack(b);
 		exit(1);
 	}
-
-	ft_quick_sort(a, b, 3);
+	print_stacks(a, b, "init a and b");
+	len = a->len;
+	while (i < len)
+	{
+		ft_quick_sort(a, b, i);
+		i++;
+	}
 	return (0);
 }
 
@@ -39,15 +46,14 @@ void set_pivot_at_end(t_stack *a, t_stack *b, int pivot_idx)
 	{
 		push_stack(a, b);
 	}
-	print_stacks(a, b, "set pivot to end");
+	// print_stacks(a, b, "set pivot to end");
 }
 
 void	ft_quick_sort(t_stack *a, t_stack *b, int pivot_idx)
 {
 	int	pivot = a->values[pivot_idx];
 	// int	result = 0;
-	ft_printf("pivot is: %d (%d idx)\n", a->values[pivot_idx], pivot_idx);
-	print_stacks(a, b, "init a and b");
+	// ft_printf("pivot is: %d (%d idx)\n", a->values[pivot_idx], pivot_idx);
 	set_pivot_at_end(a, b, pivot_idx);
 	while (b->values[b->len - 1] != pivot)
 	{
@@ -56,10 +62,10 @@ void	ft_quick_sort(t_stack *a, t_stack *b, int pivot_idx)
 		else
 			rotate_stack(b);
 	}
-	print_stacks(a, b, "sorted based on pivot");
+	// print_stacks(a, b, "sorted based on pivot");
 	while (b->len > 0)
 	{
 		push_stack(b, a);
 	}
-	print_stacks(a, b, "pivot at right place");
+	// print_stacks(a, b, "sorted");
 }
