@@ -23,7 +23,7 @@ int	start_solver(int stack_len, char **values)
 		cleanup_stack(b);
 		exit(1);
 	}
-	print_stacks(a, b, "init a and b");
+	// print_stacks(a, b, "init a and b");
 	len = a->len;
 	while (i < len)
 	{
