@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/05 09:38:42 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/05 10:39:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction);
 
 // solver
 int	start_solver(int stack_len, char **values);
-void	ft_quick_sort(t_stack *a, t_stack *b);
+void	ft_quick_sort(t_stack *a, t_stack *b, int pivot_idx);
 
 // intruction
 void	swap_stack(t_stack *s);
