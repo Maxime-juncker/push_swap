@@ -36,59 +36,129 @@ void set_pivot_at_end(t_stack *a, t_stack *b, int pivot_idx)
 	push_stack(a, b);
 	rotate_stack(b);
 
-	pivot_idx = 0;
+	print_stacks(a, b, "set pivot to end");
 }
 
 //? assuming that pivot is at the bottom of stack b
-//? idea: return 1 if no swap happend, 0 overwise
-void	do_swap(t_stack *a, t_stack *b)
+// @return 0 == continue
+// @return 1 == stop and reset pivot
+// @return 2 == stop and pivot already at right place
+int	do_swap(t_stack *a, t_stack *b)
 {
 	int	i = 0;
-	int	right = b->values[0];
-	int	left = b->values[0];
+	// default right and left to pivot idx
+	int	right = -1;
+	int	left = -1;
 
+	//* get first value bellow pivot
 	i = 0;
 	while (i < a->len)
 	{
 		// at start: left == pivot
-		if (a->values[i] > left)
+		if (a->values[i] > b->values[0])
 		{
 			left = i;
 			break;
 		}
 		i++;
 	}
-
-	i = 0;
+	//* get first value above pivot
+	i = 1;
 	while (i < b->len)
 	{
 		// at start: right == pivot
-		if (b->values[i] < right)
+		if (b->values[i] < b->values[0])
 		{
 			right = i;
 			break;
 		}
 		i++;
 	}
-	ft_printf("left: %d		|	item: %d\n", left, a->values[left]);
-	ft_printf("right: %d	|	item: %d\n", right, b->values[right]);
 
 	//* if right or left are == to b[0] then dont do anything
+	if (right == -1 && left == -1)
+		return (1);
+	else if (left == -1) // put pivot at end and return
+	{
+		while (b->len > 0)
+		{
+			push_stack(b, a);
+		}
+		print_stacks(a, b, "swap left / right");
+		return (2);
+	}
+	else if (right == -1) // put pivot at begining
+	{
+		while (b->len > 0)
+		{
+			push_stack(b, a);
+		}
+		rotate_stack(a);
+		print_stacks(a, b, "swap left / right");
+		return (2);
+	}
+	ft_printf("left:	%d	|	item:	%d\n", left, a->values[left]);
+	ft_printf("right:	%d	|	item:	%d\n\n", right, b->values[right]);
+
+	// switch left and right
+	while (left < a->len - 1)
+	{
+		rotate_stack(a);
+		left++;
+	}
+
+	// save the pivot
+	rrotate_stack(b);
+	push_stack(b, a);
+
+	while (right < b->len)
+	{
+		rotate_stack(b);
+		right++;
+	}
+
+	// return the pivot to it's original place
+	push_stack(a, b);
+	rotate_stack(b);
+
+	// switch both stack top
+	push_stack(b, a);
+	rotate_stack(a);
+	push_stack(a, b);
+
+	print_stacks(a, b, "swap left / right");
+	return (0);
+
+	// undo to place right and left in the old spot
+	//? it may be unecerry to do replace in the old spot
+	//? try later without the following code
+}
+
+void	reset_pivot(t_stack *a, t_stack *b)
+{
+	rrotate_stack(b);
+	while (b->len > 0)
+	{
+		push_stack(b, a);
+	}
+	print_stacks(a, b, "reset pivot");
 }
 
 void	ft_quick_sort(t_stack *a, t_stack *b)
 {
 	int	pivot_idx = 3; // ps c'est aussi un 3 mais tkt
+	int	result = 0;
 
-
-	// 2 6 5 3 8 7 1 0 (init)
+	ft_printf("pivot is: %d (%d idx)\n", a->values[pivot_idx], pivot_idx);
 	print_stacks(a, b, "init a and b");
-	// 2 6 5 8 7 1 0 3 (set pivot to end)
-	set_pivot_at_end(a, b, pivot_idx); // put pivot at end
-	// print_stacks(a, b, "set pivot to end");
-
+	set_pivot_at_end(a, b, pivot_idx);
 	// swap left and right
-	// do_swap(a, b);
-	// print_stacks(a, b, "swap left / right");
+	while (result == 0)
+	{
+		result = do_swap(a, b);
+	}
+	if (result == 1)
+		reset_pivot(a, b);
 
+	// put pivot at the right spot
 }
