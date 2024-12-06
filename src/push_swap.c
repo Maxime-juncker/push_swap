@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/04 15:58:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/06 12:49:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ t_stack	*create_stack(char **values, int len, const char name)
 void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 {
 	int	i;
+	int	val_a = 0;
+	int	val_b = 0;
 
 	i = 0;
 	ft_printf("----------------------------------------------------\n");
@@ -78,17 +80,26 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 	while ((a != NULL && i < a->len) || (b != NULL && i < b->len))
 	{
 		if (a != NULL && i < a->len)
-			ft_printf("%d", a->values[a->len - i - 1]);
+		{
+			val_a = a->values[a->len - i - 1];
+			ft_printf("%d \t", val_a);
+		}
 		else
 			ft_printf(" ");
-		ft_printf(" ");
 		if (b != NULL && i < b->len)
-			ft_printf("%d", b->values[b->len - i - 1]);
+		{
+			val_b = b->values[b->len - i - 1];
+			ft_printf("%d", val_b);
+		}
+		else
+			ft_printf("o", val_b);
+
+		ft_printf("\t|\t(%s)\t(%s)", u_ft_itoa_base(val_a, "01"), u_ft_itoa_base(val_b, "01"));
 		ft_printf("\n");
 		i++;
 	}
 	if (a && b)
-		ft_printf("_ _\na b \t len a: %d, len b: %d\n\n", a->len, b->len);
+		ft_printf("_\t_\na\tb \t len a: %d, len b: %d\n\n", a->len, b->len);
 	else if (a)
 		ft_printf("_ _\na b \t len a: %d\n\n", a->len);
 	else if (b)
