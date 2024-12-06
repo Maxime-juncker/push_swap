@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/06 12:49:41 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:14:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,20 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 		if (a != NULL && i < a->len)
 		{
 			val_a = a->values[a->len - i - 1];
-			ft_printf("%d \t", val_a);
+			ft_printf("%d\t", val_a);
 		}
 		else
-			ft_printf(" ");
+			ft_printf("x\t");
 		if (b != NULL && i < b->len)
 		{
 			val_b = b->values[b->len - i - 1];
 			ft_printf("%d", val_b);
 		}
 		else
-			ft_printf("o", val_b);
+			ft_printf("x", val_b);
 
-		ft_printf("\t|\t(%s)\t(%s)", u_ft_itoa_base(val_a, "01"), u_ft_itoa_base(val_b, "01"));
+		ft_printf("\t|\t(%s)\t(%s)", get_bin_n(val_a, 4), get_bin_n(val_b, 4));
+		// ft_printf("\t|\t(%s)\t(%s)", get_bin(val_a), get_bin(val_b));
 		ft_printf("\n");
 		i++;
 	}
@@ -105,6 +106,54 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 	else if (b)
 		ft_printf("_ _\na b \t len b: %d\n\n", b->len);
 
+}
+
+char	*get_bin(unsigned int n)
+{
+	char	*res;
+	char	*tmp;
+	size_t		i = 0;
+
+	tmp = u_ft_itoa_base(n, "01");
+	res = ft_calloc(sizeof(int) * 8, sizeof(char)); // sizeof(int) == 4byte == 4 * 8bit
+	i = 0;
+	while (i < ft_strlen(tmp))
+	{
+		res[sizeof(int) * 8 - i - 1] = tmp[ft_strlen(tmp) - i - 1];
+		i++;
+	}
+	i = 0;
+	while (res[i] == 0)
+	{
+		res[i] = '0';
+		i++;
+	}
+	free(tmp);
+	return (res);
+}
+
+char	*get_bin_n(unsigned int nb, int n)
+{
+	char	*res;
+	char	*tmp;
+	size_t		i = 0;
+
+	tmp = u_ft_itoa_base(nb, "01");
+	res = ft_calloc(n, sizeof(char));
+	i = 0;
+	while (i < ft_strlen(tmp))
+	{
+		res[n - i - 1] = tmp[ft_strlen(tmp) - i - 1];
+		i++;
+	}
+	i = 0;
+	while (res[i] == 0)
+	{
+		res[i] = '0';
+		i++;
+	}
+	free(tmp);
+	return (res);
 }
 
 int	main(int argc, char **argv)
