@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/06 14:14:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:31:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 
 	i = 0;
 	ft_printf("----------------------------------------------------\n");
-	ft_printf("Exec %s: \n", instruction);
+	ft_printf("Exec %s:\n", instruction);
 	while ((a != NULL && i < a->len) || (b != NULL && i < b->len))
 	{
 		if (a != NULL && i < a->len)
