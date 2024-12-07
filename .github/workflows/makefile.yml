@@ -16,3 +16,5 @@ jobs:
 
     - name: make debug
       run: make debug
+	- name: make benchmark
+		run: make benchmark
