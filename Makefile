@@ -87,7 +87,9 @@ benchmark: all
 	echo "\n==================================================================" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "==================================================================\n" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	cat $(LOG_D)benchmark_$(shell date --iso=seconds).log
+	echo "\n=================================================================="
+	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||"
+	echo "==================================================================\n"
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 .SILENT:

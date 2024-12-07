@@ -112,12 +112,28 @@ void	solve(t_stack *a, t_stack *b)
 	}
 
 #if PRINT_STEPS
+	print_stacks(a, b, "buckets created");
 	ft_printf("====================\n");
 	ft_printf("sorting buckets\n");
 #endif
-	sort(a, b, b->len - 1);
-#if PRINT_STEPS
-	print_stacks(a, b, "finish sorting");
-#endif
+	//loop over the buckets
+	int	last_bin_idx = 31;
+	int	j = b->len-1;
+	while (j >= 0)
+	{
+		if (get_bin(b->values[j])[last_bin_idx-1] == '1')
+		{
+			ft_printf("===========\nnew bucket\n");
+			last_bin_idx--;
+		}
+		ft_printf("%d\t(%s) [%c]\n", b->values[j], get_bin(b->values[j]), get_bin(b->values[j])[last_bin_idx-1]);
+		j--;
+	}
+
+
+	//sort(a, b, b->len - 1);
+// #if PRINT_STEPS
+// 	print_stacks(a, b, "finish sorting");
+// #endif
 
 }
