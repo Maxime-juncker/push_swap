@@ -74,9 +74,9 @@ void	solve(t_stack *a, t_stack *b)
 	while (i < sizeof(int) * 8)
 	{
 		bucket_pass(a, b, i);
-		sort(a, b);
 		print_stacks(a, b, "pass");
 		ft_printf("pass: %d\n", i);
 		i++;
 	}
+
 }
