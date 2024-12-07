@@ -21,7 +21,7 @@ int	start_solver(int stack_len, char **values)
 		cleanup_stack(b);
 		exit(1);
 	}
-	print_stacks(a, b, "init a and b");
+	// print_stacks(a, b, "init a and b");
 	solve(a, b);
 	return (0);
 }
@@ -46,18 +46,34 @@ void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
 
 }
 
-void	sort(t_stack *a, t_stack *b)
+
+void	sort(t_stack *a, t_stack *b, int pivot_idx)
 {
+	int	nb_pop = 0;
 	int	i = 0;
-	(void)a;
-	if (b->len < 2)
-		return ;
-	while (i < b->len)
+	int	pivot = b->values[pivot_idx];
+
+	push_stack(b, a);
+	rotate_stack(a);
+	while (a->values[a->len - 1] > pivot)
 	{
-		if (b->values[b->len - 1] < b->values[b->len - 2])
-			swap_stack(b);
-		rotate_stack(b);
+		push_stack(a, b);
+		nb_pop++;
+	}
+	rrotate_stack(a);
+	while (i < nb_pop)
+	{
+		push_stack(b, a);
 		i++;
+	}
+	if (b->len > 0)
+		sort(a, b, b->len - 1);
+	else
+	{
+		while (a->len > 0)
+		{
+			push_stack(a, b);
+		}
 	}
 }
 
@@ -74,9 +90,13 @@ void	solve(t_stack *a, t_stack *b)
 	while (i < sizeof(int) * 8)
 	{
 		bucket_pass(a, b, i);
-		print_stacks(a, b, "pass");
-		ft_printf("pass: %d\n", i);
+		// print_stacks(a, b, "pass");
+		// ft_printf("pass: %d\n", i);
 		i++;
 	}
+
+	sort(a, b, b->len - 1);
+		// print_stacks(a, b, "pass");
+
 
 }

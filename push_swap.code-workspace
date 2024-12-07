@@ -3,16 +3,5 @@
 		{
 			"path": "."
 		}
-	],
-	"settings": {
-		"files.associations": {
-			"*.c": "c",
-			"push_swap.h": "c"
-		},
-		"files.exclude": {
-     "**/.git": false
-}
-
-	}
-	
+	]
 }
