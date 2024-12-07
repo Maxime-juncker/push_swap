@@ -6,14 +6,20 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/07 10:49:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/07 12:36:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# ifndef DETAIL_INSTRUCTION
 # define DETAIL_INSTRUCTION 0
+# endif
+
+# ifndef PRINT_STEPS
+# define PRINT_STEPS 1
+# endif
 
 # include "libft.h"
 

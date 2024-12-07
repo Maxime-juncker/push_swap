@@ -61,9 +61,6 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-.libft:
-	$(MAKE) -C ./libft
-
 # Create directories
 $(OBJ_D):
 	echo "$(YELLOW)[CREATING]: $(OBJ_D)$(RESET)"
@@ -77,16 +74,19 @@ $(BIN_D):
 	echo "$(YELLOW)[CREATING]: $(BIN_D)$(RESET)"
 	mkdir -p $(BIN_D)
 
+.PHONY: debug
 debug: all $(LOG_D)
 	$(BIN_D)./push_swap $(ARGS) > $(LOG_D)$(shell date --iso=seconds).log
-	cat $(LOG_D)/$(shell date --iso=seconds).log
-	echo "$(BLUE)[LOG]: $(LOG_D)$(shell date --iso=seconds).log"
+	cat $(LOG_D)$(shell date --iso=seconds).log
+	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 INSTRUCTION_COUNT = $(shell $(BIN_D)./push_swap $(BARGS) | wc -l)
+.PHONY: benchmark
 benchmark: all
 	$(BIN_D)./push_swap $(BARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "$(GREEN)\n=========================================================================="
-	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||"
-	echo "==========================================================================\n$(RESET)"
+	echo "\n==================================================================" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
+	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
+	echo "==================================================================\n" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
+	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 .SILENT:

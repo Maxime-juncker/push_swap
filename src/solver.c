@@ -21,7 +21,10 @@ int	start_solver(int stack_len, char **values)
 		cleanup_stack(b);
 		exit(1);
 	}
-	// print_stacks(a, b, "init a and b");
+
+#if PRINT_STEPS
+	print_stacks(a, b, "init a and b");
+#endif
 	solve(a, b);
 	return (0);
 }
@@ -95,24 +98,26 @@ void	sort(t_stack *a, t_stack *b, int pivot_idx)
 
 void	solve(t_stack *a, t_stack *b)
 {
-	// bucket_pass(a, b, 28);
-	// print_stacks(a, b, "pass 28");
-	// sort(a, b);
-	// print_stacks(a, b, "sorted");
-
+#if PRINT_STEPS
+	ft_printf("====================\n");
+	ft_printf("creating buckets\n");
+#endif
 	// !! pass need to start at 1 not 0
 	// !! bin[0] is the msb which tell us the sign
 	size_t	i = 1;
 	while (i < sizeof(int) * 8)
 	{
 		bucket_pass(a, b, i);
-		// print_stacks(a, b, "pass");
-		// ft_printf("pass: %d\n", i);
 		i++;
 	}
 
+#if PRINT_STEPS
+	ft_printf("====================\n");
+	ft_printf("sorting buckets\n");
+#endif
 	sort(a, b, b->len - 1);
-	print_stacks(a, b, "done");
-
+#if PRINT_STEPS
+	print_stacks(a, b, "finish sorting");
+#endif
 
 }
