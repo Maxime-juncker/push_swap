@@ -31,14 +31,30 @@ void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
 	int	i;
 	int	original_len;
 	char	*tmp;
+	int	stop_after = 0;
+	int	nb_push = 0;
 
 	original_len = a->len;
 	i = 0;
+	// pre pass
 	while (i < original_len)
+	{
+		tmp = get_bin(a->values[i]);
+		if (tmp[pass_idx] == '1')
+			stop_after++;
+		i++;
+	}
+
+	i = 0;
+	// full pass
+	while (i < original_len && nb_push < stop_after)
 	{
 		tmp = get_bin(a->values[a->len - 1]);
 		if (tmp[pass_idx] == '1')
+		{
 			push_stack(a, b);
+			nb_push++;
+		}
 		else
 			rotate_stack(a);
 		i++;
@@ -86,7 +102,7 @@ void	solve(t_stack *a, t_stack *b)
 
 	// !! pass need to start at 1 not 0
 	// !! bin[0] is the msb which tell us the sign
-	size_t	i = 28;
+	size_t	i = 1;
 	while (i < sizeof(int) * 8)
 	{
 		bucket_pass(a, b, i);
@@ -96,7 +112,7 @@ void	solve(t_stack *a, t_stack *b)
 	}
 
 	sort(a, b, b->len - 1);
-		// print_stacks(a, b, "pass");
+	print_stacks(a, b, "done");
 
 
 }
