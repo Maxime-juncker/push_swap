@@ -25,6 +25,7 @@ RESET 	= \033[0m
 BLUE 	= \033[34m
 
 RM = rm -fr
+ARGS = 7 3 2 8 10 4 6 1 9 5
 
 
 all: $(BIN_D)$(NAME)
@@ -42,7 +43,7 @@ $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h | $(OBJ_D)
 
 .PHONY: clean
 clean:
-	echo "$(RED)[CLEAN]: obj files$(RESET)"
+	echo "$(RED)[CLEAN]: int files$(RESET)"
 	$(MAKE) clean -C ./libft
 	$(RM) $(OBJ_D)
 	$(RM) $(LOG_D)
@@ -76,11 +77,12 @@ $(BIN_D):
 	mkdir -p $(BIN_D)
 
 debug: all $(LOG_D)
-	./push_swap 7 3 2 8 10 4 6 1 9 5 > $(LOG_D)log_$(shell date --iso=seconds).txt
-	cat $(LOG_D)/log_$(shell date --iso=seconds).txt
-	echo "$(BLUE)[LOG]: $(LOG_D)$(shell date --iso=seconds).txt"
+	clear
+	$(BIN_D)./push_swap $(ARGS) > $(LOG_D)$(shell date --iso=seconds).log
+	cat $(LOG_D)/$(shell date --iso=seconds).log
+	echo "$(BLUE)[LOG]: $(LOG_D)$(shell date --iso=seconds).log"
 
-INSTRUCTION_COUNT = $(shell ./push_swap 125 872 719 974 393 110 762 193 336 738 380 730 29 258 368 326 794 163 45 543 919 165 609 902 643 288 546 659 270 142 964 213 876 663 807 384 651 28 921 477 890 271 297 647 426 984 809 650 593 463 325 839 111 641 2 903 826 339 816 117 473 67 489 345 946 132 501 269 776 318 247 596 817 657 667 388 16 940 232 822 602 671 674 49 410 545 926 848 328 37 866 437 681 38 672 973 538 654 276 95 | wc -l)
+INSTRUCTION_COUNT = $(shell $(BIN_D)./push_swap 125 872 719 974 393 110 762 193 336 738 380 730 29 258 368 326 794 163 45 543 919 165 609 902 643 288 546 659 270 142 964 213 876 663 807 384 651 28 921 477 890 271 297 647 426 984 809 650 593 463 325 839 111 641 2 903 826 339 816 117 473 67 489 345 946 132 501 269 776 318 247 596 817 657 667 388 16 940 232 822 602 671 674 49 410 545 926 848 328 37 866 437 681 38 672 973 538 654 276 95 | wc -l)
 benchmark: all
 	echo "$(GREEN)\n=========================================================================="
 	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||"

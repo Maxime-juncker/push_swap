@@ -46,15 +46,35 @@ void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
 
 }
 
+void	sort(t_stack *a, t_stack *b)
+{
+	int	i = 0;
+	(void)a;
+	if (b->len < 2)
+		return ;
+	while (i < b->len)
+	{
+		if (b->values[b->len - 1] < b->values[b->len - 2])
+			swap_stack(b);
+		rotate_stack(b);
+		i++;
+	}
+}
+
 void	solve(t_stack *a, t_stack *b)
 {
-	// bucket_pass(a, b, 31);
-	// print_stacks(a, b, "pass");
+	// bucket_pass(a, b, 28);
+	// print_stacks(a, b, "pass 28");
+	// sort(a, b);
+	// print_stacks(a, b, "sorted");
 
+	// !! pass need to start at 1 not 0
+	// !! bin[0] is the msb which tell us the sign
 	size_t	i = 28;
 	while (i < sizeof(int) * 8)
 	{
 		bucket_pass(a, b, i);
+		sort(a, b);
 		print_stacks(a, b, "pass");
 		ft_printf("pass: %d\n", i);
 		i++;

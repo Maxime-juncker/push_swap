@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:37 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/04 15:53:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:28:10 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	swap_stack(t_stack *s)
 
 instruction[0] = 's';
 instruction[1] = s->name;
-#ifdef DETAIL_INSTRUCTION
+instruction[2] = 0;
+#if DETAIL_INSTRUCTION
 	if (s->name == 'a')
 		print_stacks(s, NULL, instruction);
 	else

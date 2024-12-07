@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/06 14:31:32 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/07 09:47:39 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int	main(int argc, char **argv)
 		return (0);
 	argc--;
 	argv++;
+	// ft_printf("bin -42: %s\n", get_bin(-42));
 	return (start_solver(argc, argv));
 
 }
