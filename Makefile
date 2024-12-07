@@ -77,7 +77,6 @@ $(BIN_D):
 	mkdir -p $(BIN_D)
 
 debug: all $(LOG_D)
-	clear
 	$(BIN_D)./push_swap $(ARGS) > $(LOG_D)$(shell date --iso=seconds).log
 	cat $(LOG_D)/$(shell date --iso=seconds).log
 	echo "$(BLUE)[LOG]: $(LOG_D)$(shell date --iso=seconds).log"
