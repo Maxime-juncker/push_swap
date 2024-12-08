@@ -62,7 +62,6 @@ void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
 			rotate_stack(a);
 		i++;
 	}
-
 }
 
 
@@ -71,8 +70,12 @@ void	sort(t_stack *a, t_stack *b, int pivot_idx)
 	int	nb_pop = 0;
 	int	i = 0;
 	int	pivot = b->values[pivot_idx];
-
+#if PRINT_STEPS
+	ft_printf("sorting: %d %d\n", pivot, a->values[a->len - 2]);
+#endif
 	push_stack(b, a);
+	if (a->len == 1 || a->values[a->len - 2] < pivot)
+		return;
 	rotate_stack(a);
 	while (a->values[a->len - 1] > pivot)
 	{
@@ -85,15 +88,7 @@ void	sort(t_stack *a, t_stack *b, int pivot_idx)
 		push_stack(b, a);
 		i++;
 	}
-	if (b->len > 0)
-		sort(a, b, b->len - 1);
-	else
-	{
-		while (a->len > 0)
-		{
-			push_stack(a, b);
-		}
-	}
+
 }
 
 void	solve(t_stack *a, t_stack *b)
@@ -117,23 +112,30 @@ void	solve(t_stack *a, t_stack *b)
 	ft_printf("sorting buckets\n");
 #endif
 	//loop over the buckets
-	int	last_bin_idx = 31;
+	int	last_bin_idx = 31; //? for 32 bit intergers
 	int	j = b->len-1;
-	while (j >= 0)
+	int	bucket_len = 0;
+	while (j >= 0 && b->len > 0)
 	{
-		if (get_bin(b->values[j])[last_bin_idx-1] == '1')
+		if (get_bin(b->values[b->len-1])[last_bin_idx-1] == '1')
 		{
+#if PRINT_STEPS
 			ft_printf("===========\nnew bucket\n");
+#endif
+			bucket_len = 0;
 			last_bin_idx--;
 		}
-		ft_printf("%d\t(%s) [%c]\n", b->values[j], get_bin(b->values[j]), get_bin(b->values[j])[last_bin_idx-1]);
+		bucket_len++;
+		//foreach bucket sort and place into a
+#if PRINT_STEPS
+		ft_printf("%d\t(%s) [%c]\n", b->values[b->len-1], get_bin(b->values[b->len-1]), get_bin(b->values[b->len-1])[last_bin_idx-1]);
+	print_stacks(a, b, "sorting");
+#endif
+		sort(a, b, b->len-1);
 		j--;
 	}
-
-
-	//sort(a, b, b->len - 1);
-// #if PRINT_STEPS
-// 	print_stacks(a, b, "finish sorting");
-// #endif
+#if PRINT_STEPS
+	print_stacks(a, b, "finish sorting");
+#endif
 
 }

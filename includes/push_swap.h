@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/07 12:36:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:52:16 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 # ifndef PRINT_STEPS
-# define PRINT_STEPS 1
+# define PRINT_STEPS 0
 # endif
 
 # include "libft.h"
