@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:49 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/07 11:36:45 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/09 06:19:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 			ft_printf("x", val_b);
 
 		ft_printf("\t|\t(%s)\t(%s)", get_bin_n(val_a, 4), get_bin_n(val_b, 4));
-		// ft_printf("\t|\t(%s)\t(%s)", get_bin(val_a), get_bin(val_b));
 		ft_printf("\n");
 		i++;
 	}
@@ -105,7 +104,6 @@ void	print_stacks(t_stack *a, t_stack *b, char *instruction)
 		ft_printf("_ _\na b \t len a: %d\n\n", a->len);
 	else if (b)
 		ft_printf("_ _\na b \t len b: %d\n\n", b->len);
-
 }
 
 char	*get_bin(unsigned int n)

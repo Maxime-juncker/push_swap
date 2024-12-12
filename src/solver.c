@@ -1,4 +1,5 @@
 #include "push_swap.h"
+#include <math.h>
 
 int	start_solver(int stack_len, char **values)
 {
@@ -29,50 +30,11 @@ int	start_solver(int stack_len, char **values)
 	return (0);
 }
 
-void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
-{
-	int	i;
-	int	original_len;
-	char	*tmp;
-	int	stop_after = 0;
-	int	nb_push = 0;
-
-	original_len = a->len;
-	i = 0;
-	// pre pass
-	while (i < original_len)
-	{
-		tmp = get_bin(a->values[i]);
-		if (tmp[pass_idx] == '1')
-			stop_after++;
-		i++;
-	}
-
-	i = 0;
-	// full pass
-	while (i < original_len && nb_push < stop_after)
-	{
-		tmp = get_bin(a->values[a->len - 1]);
-		if (tmp[pass_idx] == '1')
-		{
-			push_stack(a, b);
-			nb_push++;
-		}
-		else
-			rotate_stack(a);
-		i++;
-	}
-}
-
-
 void	sort(t_stack *a, t_stack *b, int pivot_idx)
 {
 	int	nb_pop = 0;
 	int	i = 0;
 	int	pivot = b->values[pivot_idx];
-#if PRINT_STEPS
-	ft_printf("sorting: %d %d\n", pivot, a->values[a->len - 2]);
-#endif
 	push_stack(b, a);
 	if (a->len == 1 || a->values[a->len - 2] < pivot)
 		return;
@@ -88,7 +50,71 @@ void	sort(t_stack *a, t_stack *b, int pivot_idx)
 		push_stack(b, a);
 		i++;
 	}
+}
 
+int	power(int a, int n)
+{
+	int	tmp = a;
+	int	i = 1;
+	while (i < n)
+	{
+		a *= tmp;
+		i++;
+	}
+	return (a);
+}
+
+int	is_sorted(t_stack *stack)
+{
+	int	i = 1;
+
+	if (stack->len == 1)
+		return (1);
+	while (i < stack->len)
+	{
+		if (stack->values[i] > stack->values[i - 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	pre_pass(t_stack *a, int pass_idx, int i)
+{
+	int	res = 0;
+	while (i < a->len)
+	{
+		if (a->values[a->len - 1] % power(10, pass_idx) == i)
+			res++;
+		i++;
+	}
+	return (res);
+}
+
+void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
+{
+	int	i = 0;
+	int	nb_elem = a->len;
+	// int nb_left = pre_pass(a, pass_idx, i);
+	while (a->len > 0)
+	{
+		if (nb_elem == 0)
+		{
+			nb_elem = a->len;
+			// nb_left = pre_pass(a, pass_idx, i);
+			i++;
+		}
+		if (a->values[a->len - 1] % power(10, pass_idx) == i)
+		{
+			push_stack(a, b);
+			// nb_left--;
+		}
+		else
+			rotate_stack(a);
+		nb_elem--;
+	}
+	while (b->len > 0)
+		push_stack(b, a);
 }
 
 void	solve(t_stack *a, t_stack *b)
@@ -97,43 +123,15 @@ void	solve(t_stack *a, t_stack *b)
 	ft_printf("====================\n");
 	ft_printf("creating buckets\n");
 #endif
-	// !! pass need to start at 1 not 0
-	// !! bin[0] is the msb which tell us the sign
-	size_t	i = 1;
-	while (i < sizeof(int) * 8)
+	int	i = 1;
+	while (i < 3)
 	{
 		bucket_pass(a, b, i);
 		i++;
 	}
+	
 
-#if PRINT_STEPS
-	print_stacks(a, b, "buckets created");
-	ft_printf("====================\n");
-	ft_printf("sorting buckets\n");
-#endif
-	//loop over the buckets
-	int	last_bin_idx = 31; //? for 32 bit intergers
-	int	j = b->len-1;
-	int	bucket_len = 0;
-	while (j >= 0 && b->len > 0)
-	{
-		if (get_bin(b->values[b->len-1])[last_bin_idx-1] == '1')
-		{
-#if PRINT_STEPS
-			ft_printf("===========\nnew bucket\n");
-#endif
-			bucket_len = 0;
-			last_bin_idx--;
-		}
-		bucket_len++;
-		//foreach bucket sort and place into a
-#if PRINT_STEPS
-		ft_printf("%d\t(%s) [%c]\n", b->values[b->len-1], get_bin(b->values[b->len-1]), get_bin(b->values[b->len-1])[last_bin_idx-1]);
-	print_stacks(a, b, "sorting");
-#endif
-		sort(a, b, b->len-1);
-		j--;
-	}
+
 #if PRINT_STEPS
 	print_stacks(a, b, "finish sorting");
 #endif
