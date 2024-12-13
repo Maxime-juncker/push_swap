@@ -25,7 +25,7 @@ RESET 	= \033[0m
 BLUE 	= \033[34m
 
 RM = rm -fr
-ARGS = 329 457 657 839 436 720 355
+ARGS = 329 457 657 839 436 720 355 550
 BARGS = 125 872 719 974 393 110 762 193 336 738 380 730 29 258 368 326 794 163 45 543 919 165 609 902 643 288 546 659 270 142 964 213 876 663 807 384 651 28 921 477 890 271 297 647 426 984 809 650 593 463 325 839 111 641 2 903 826 339 816 117 473 67 489 345 946 132 501 269 776 318 247 596 817 657 667 388 16 940 232 822 602 671 674 49 410 545 926 848 328 37 866 437 681 38 672 973 538 654 276 95
 
 all: $(BIN_D)$(NAME)
@@ -86,7 +86,7 @@ debug: all $(LOG_D)
 
 INSTRUCTION_COUNT = $(shell $(BIN_D)./push_swap $(BARGS) | wc -l)
 .PHONY: benchmark
-benchmark: all
+benchmark: all $(LOG_D)
 	$(BIN_D)./push_swap $(BARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "\n==================================================================" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log

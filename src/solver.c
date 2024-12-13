@@ -30,28 +30,6 @@ int	start_solver(int stack_len, char **values)
 	return (0);
 }
 
-void	sort(t_stack *a, t_stack *b, int pivot_idx)
-{
-	int	nb_pop = 0;
-	int	i = 0;
-	int	pivot = b->values[pivot_idx];
-	push_stack(b, a);
-	if (a->len == 1 || a->values[a->len - 2] < pivot)
-		return;
-	rotate_stack(a);
-	while (a->values[a->len - 1] > pivot)
-	{
-		push_stack(a, b);
-		nb_pop++;
-	}
-	rrotate_stack(a);
-	while (i < nb_pop)
-	{
-		push_stack(b, a);
-		i++;
-	}
-}
-
 int	power(int a, int n)
 {
 	int	tmp = a;
@@ -64,27 +42,17 @@ int	power(int a, int n)
 	return (a);
 }
 
-int	is_sorted(t_stack *stack)
-{
-	int	i = 1;
 
-	if (stack->len == 1)
-		return (1);
-	while (i < stack->len)
-	{
-		if (stack->values[i] > stack->values[i - 1])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	pre_pass(t_stack *a, int pass_idx, int i)
+int	pre_pass(t_stack *a, int pass_idx, int value)
 {
+#if PRINT_STEPS
+	ft_printf("====== PASS %d (%d) ======\n", pass_idx, value);
+#endif
 	int	res = 0;
+	int	i = 0;
 	while (i < a->len)
 	{
-		if (a->values[a->len - 1] % power(10, pass_idx) == i)
+		if (a->values[i] / power(10, pass_idx) % 10 == value)
 			res++;
 		i++;
 	}
@@ -95,26 +63,53 @@ void	bucket_pass(t_stack *a, t_stack *b, int pass_idx)
 {
 	int	i = 0;
 	int	nb_elem = a->len;
-	// int nb_left = pre_pass(a, pass_idx, i);
+	int nb_left = pre_pass(a, pass_idx, i);
 	while (a->len > 0)
 	{
 		if (nb_elem == 0)
 		{
-			nb_elem = a->len;
-			// nb_left = pre_pass(a, pass_idx, i);
 			i++;
+			nb_elem = a->len;
+			nb_left = pre_pass(a, pass_idx, i);
 		}
-		if (a->values[a->len - 1] % power(10, pass_idx) == i)
+		if (a->values[a->len - 1] / power(10, pass_idx) % 10 == i)
 		{
 			push_stack(a, b);
-			// nb_left--;
+			nb_left--;
+			nb_elem--;
+		}
+		else if (nb_left == 0)
+		{
+			i++;
+			nb_elem = a->len;
+			nb_left = pre_pass(a, pass_idx, i);
 		}
 		else
+		{
+			nb_elem--;
 			rotate_stack(a);
-		nb_elem--;
+		}
 	}
 	while (b->len > 0)
 		push_stack(b, a);
+}
+
+int	get_biggest_len(t_stack *a)
+{
+	int	i;
+	int	max_len;
+	int	tmp;
+
+	i = 0;
+	max_len = 0;
+	while (i < a->len)
+	{
+		tmp = ft_strlen(ft_itoa(a->values[i]));
+		if (tmp > max_len)
+			max_len = tmp;
+		i++;
+	}
+	return (max_len);
 }
 
 void	solve(t_stack *a, t_stack *b)
@@ -123,14 +118,13 @@ void	solve(t_stack *a, t_stack *b)
 	ft_printf("====================\n");
 	ft_printf("creating buckets\n");
 #endif
-	int	i = 1;
-	while (i < 3)
+	int	i = 0;
+	int	max = get_biggest_len(a);
+	while (i < max)
 	{
 		bucket_pass(a, b, i);
 		i++;
 	}
-	
-
 
 #if PRINT_STEPS
 	print_stacks(a, b, "finish sorting");
