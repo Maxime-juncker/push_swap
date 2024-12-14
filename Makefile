@@ -94,4 +94,8 @@ benchmark: all $(LOG_D)
 	echo "push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers"
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
+visu: all
+	make -C push_swap_visualizer/build/
+	./push_swap_visualizer/build/bin/visualizer
+
 .SILENT:
