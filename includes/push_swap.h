@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/19 12:06:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:19:18 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 
 # include "libft.h"
 
-
+// push_swap_instruction.c
+void	swap_a(t_list **a);
+void	swap_b(t_list **b);
+void	push_a(t_list **a, t_list **b);
+void	push_b(t_list **a, t_list **b);
+void	rotate_a(t_list **a);
+void	rrotate_a(t_list **a);
+void	rotate_b(t_list **a);
+void	rrotate_b(t_list **a);
 
 #endif //PUSH_SWAP_H

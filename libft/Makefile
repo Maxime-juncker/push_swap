@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2024/12/19 12:17:37 by mjuncker         ###   ########.fr        #
+#    Updated: 2024/12/19 12:27:09 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,8 @@ SRCS =  ft_isalpha.c 		\
 		ft_lstclear.c 		\
 		ft_lstiter.c 		\
 		ft_lstmap.c			\
+		ft_lstnew.c			\
+		ft_lstprint.c		\
 		ft_get_next_line.c	\
 		ft_printf.c			\
 

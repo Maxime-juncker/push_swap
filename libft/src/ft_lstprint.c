@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 15:27:29 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/19 15:43:39 by mjuncker         ###   ########.fr       */
+/*   Created: 2024/12/19 12:23:24 by mjuncker          #+#    #+#             */
+/*   Updated: 2024/12/19 12:27:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstprint(t_list *lst)
 {
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
+	ft_printf("[");
+	while (lst->next)
 	{
-		*lst = new;
-		new->next = NULL;
+		ft_printf("%s => ", lst->content);
+		lst = lst->next;
 	}
-	else
-	{
-		new->next = lst[0];
-		lst[0] = new;
-	}
+	ft_printf("%s]\n", lst->content);
 }
