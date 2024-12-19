@@ -4,7 +4,6 @@ MAKEFLAGS += --no-print-directory
 
 SRC =	push_swap.c					\
 		push_swap_instruction.c		\
-		solver.c					\
 
 OBJ = $(SRC:.c=.o)
 
@@ -32,7 +31,7 @@ all: $(BIN_D)$(NAME)
 
 $(BIN_D)$(NAME): $(OBJ) $(BIN_D)
 	echo "$(YELLOW)[MAKE]: libft$(RESET)"
-	$(MAKE)  -C libft
+	$(MAKE) -C libft
 	$(CC) $(CFLAGS) $(OBJ) libft/bin/libft.a -o $(BIN_D)$(NAME)
 	echo "$(YELLOW)[CREATING EXE]: $@$(RESET)"
 	echo "$(GREEN)[SUCCESS]: $@$(RESET)"
