@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/19 16:19:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:38:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PUSH_SWAP_H
 
 # ifndef DETAIL_INSTRUCTION
-# define DETAIL_INSTRUCTION 0
+# define DETAIL_INSTRUCTION 1
 # endif
 
 # ifndef PRINT_STEPS
@@ -32,5 +32,9 @@ void	rotate_a(t_list **a);
 void	rrotate_a(t_list **a);
 void	rotate_b(t_list **a);
 void	rrotate_b(t_list **a);
+
+
+// push_swap
+void	debug_print(t_list *a, t_list *b, const char *action);
 
 #endif //PUSH_SWAP_H
