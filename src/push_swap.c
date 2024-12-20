@@ -86,9 +86,49 @@ int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
 		i++;
 		b = b->next;
 	}
-
-	ft_printf("cost for %d: %d\n", elt, top_a_cost + top_b_cost + 1);
 	return (top_a_cost + top_b_cost + 1);
+
+}
+
+void pass(t_list **a, t_list **b)
+{
+	int best_weight = 999;
+	int i = 0;
+
+
+	int ra = 0;
+	int rb = 0;
+	int tmp = 0;
+	t_list	*cpy = *a;
+	while (cpy)
+	{
+		tmp = get_move_weight(*a, *b, i, ft_atoi(cpy->content));
+		if (tmp < best_weight)
+		{
+			best_weight = tmp;
+			ra = i;
+			rb = best_weight - 1 - i;
+		}
+		cpy = cpy->next;
+		i++;
+	}
+
+
+	ft_printf("ra: %d\nrb: %d\n", ra, rb);
+	i = 0;
+	while (i < ra)
+	{
+		rotate_a(a);
+		i++;
+	}
+	i = 0;
+	while (i < rb)
+	{
+		rotate_b(b);
+		i++;
+	}
+	push_b(a, b);
+	ft_printf("\n\n");
 
 }
 
@@ -114,8 +154,12 @@ int	main(void)
 	push_b(&a, &b);
 	push_b(&a, &b);
 
-	get_move_weight(a, b, 0, 7);
-	get_move_weight(a, b, 1, 1);
-	get_move_weight(a, b, 2, 6);
-	get_move_weight(a, b, 3, 3);
+	pass(&a, &b);
+	pass(&a, &b);
+	pass(&a, &b);
+	pass(&a, &b);
+	pass(&a, &b);
+	pass(&a, &b);
+	pass(&a, &b);
+	debug_print(a, b, " ");
 }

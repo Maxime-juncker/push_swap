@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2024/12/19 17:38:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:15:06 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PUSH_SWAP_H
 
 # ifndef DETAIL_INSTRUCTION
-# define DETAIL_INSTRUCTION 1
+# define DETAIL_INSTRUCTION 0
 # endif
 
 # ifndef PRINT_STEPS
