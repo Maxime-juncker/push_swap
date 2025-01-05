@@ -36,6 +36,19 @@ int	get_max(t_list *lst)
 	return (max);
 }
 
+int	get_min(t_list *lst)
+{
+	int max = ft_atoi(lst->content);
+
+	while (lst)
+	{
+		if (ft_atoi(lst->content) < max)
+			max = ft_atoi(lst->content);
+		lst = lst->next;
+	}
+	return (max);
+}
+
 int	is_biggest(int elt, t_list *b)
 {
 	while (b)
@@ -46,48 +59,41 @@ int	is_biggest(int elt, t_list *b)
 	}
 	return (1);
 }
+// 2 3 3 4
 
-/* 2 3 3 4 */
-
+// ! marche pas
 int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
 {
 	(void)a;
 	// cost of putting move on top
 	int	top_a_cost = idx; // si idx == 0 alors elt top et donc pas de cout pour rotate a
 	int	top_b_cost = 0;
-	int	max;
 
-	//=========================================================================
-	// if elt is begger than stack b, then elt need to be on top of the max of b
 	if (is_biggest(elt, b))
 	{
-		max = get_max(b);
-		while (ft_atoi(b->content) != max && ft_atoi(ft_lstlast(b)->content) != max)
+		int b_biggest = get_max(b);
+		while (b != NULL && ft_atoi(b->content) != b_biggest)
 		{
 			top_b_cost++;
 			b = b->next;
 		}
-		ft_printf("cost for %d: %d\n", elt, top_a_cost + top_b_cost + 1);
-		return (top_a_cost + top_b_cost + 1);
 	}
-	//=========================================================================
-
-	int	range = 999;
-	int tmp = 0;
-	int	i = 1;
-	while (b)
+	else
 	{
-		tmp = abs(ft_atoi(b->content) - elt);
-		if (tmp < range)
+		while (b != NULL)
 		{
-			top_b_cost = i;
-			range = tmp;
+			if (ft_atoi(b->content) < elt)
+				break;
+			top_b_cost++;
+			b = b->next;
 		}
-		i++;
-		b = b->next;
-	}
-	return (top_a_cost + top_b_cost + 1);
 
+	}
+
+
+	// ft_printf("cost for %d: %d\n\ta: %d\n\tb: %d\n", elt, top_a_cost + top_b_cost + 1, top_a_cost, top_b_cost);
+
+	return (top_a_cost + top_b_cost + 1); // +1 vue que on push
 }
 
 void pass(t_list **a, t_list **b)
@@ -113,8 +119,7 @@ void pass(t_list **a, t_list **b)
 		i++;
 	}
 
-
-	ft_printf("ra: %d\nrb: %d\n", ra, rb);
+	// ft_printf("ra: %d\nrb: %d\n", ra, rb);
 	i = 0;
 	while (i < ra)
 	{
@@ -128,7 +133,7 @@ void pass(t_list **a, t_list **b)
 		i++;
 	}
 	push_b(a, b);
-	ft_printf("\n\n");
+	// ft_printf("\n\n");
 
 }
 
@@ -148,18 +153,26 @@ int	main(void)
 	ft_lstadd_back(&a, ft_lstnew("9"));
 	ft_lstadd_back(&a, ft_lstnew("4"));
 	ft_lstadd_back(&a, ft_lstnew("8"));
-	debug_print(a, b, "Init a and b");
+	// debug_print(a, b, "Init a and b");
 
 	// fist push 2 element of a to b
 	push_b(&a, &b);
 	push_b(&a, &b);
 
-	pass(&a, &b);
-	pass(&a, &b);
-	pass(&a, &b);
-	pass(&a, &b);
-	pass(&a, &b);
-	pass(&a, &b);
-	pass(&a, &b);
-	debug_print(a, b, " ");
+	while (ft_lstsize(a) > 0)
+	{
+		pass(&a, &b);
+		// debug_print(a, b, "pass");
+	}
+	while (ft_lstsize(b) > 0)
+	{
+		push_a(&a, &b);
+	}
+	// debug_print(a, b, "push a");
+	int min = get_min(a);
+	while (ft_atoi(a->content) != min)
+	{
+		rotate_a(&a);
+	}
+	// debug_print(a, b, "done");
 }
