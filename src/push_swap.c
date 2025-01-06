@@ -2,6 +2,7 @@
 
 void	debug_print(t_list *a, t_list *b, const char *action)
 {
+	return;
 
 	ft_printf("-----------------------\n");
 	ft_printf("exec %s:\n", action);
@@ -59,17 +60,40 @@ int	is_biggest(int elt, t_list *b)
 	}
 	return (1);
 }
+
+int	is_min(int elt, t_list *b)
+{
+	while (b)
+	{
+		if (ft_atoi(b->content) < elt)
+			return (0);
+		b = b->next;
+	}
+	return (1);
+}
 // 2 3 3 4
 
 // ! marche pas
 int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
 {
+	// debug_print(a, b, "550");
 	(void)a;
 	// cost of putting move on top
 	int	top_a_cost = idx; // si idx == 0 alors elt top et donc pas de cout pour rotate a
 	int	top_b_cost = 0;
 
-	if (is_biggest(elt, b))
+	if (is_min(elt, b))
+	{
+		int b_min = get_min(b);
+		while (b != NULL && ft_atoi(b->content) != b_min)
+		{
+			top_b_cost++;
+			b = b->next;
+		}
+		top_b_cost++;
+
+	}
+	else if (is_biggest(elt, b))
 	{
 		int b_biggest = get_max(b);
 		while (b != NULL && ft_atoi(b->content) != b_biggest)
@@ -80,17 +104,17 @@ int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
 	}
 	else
 	{
+		int last = ft_atoi(ft_lstlast(b)->content);
 		while (b != NULL)
 		{
-			if (ft_atoi(b->content) < elt)
+			if (last > elt && ft_atoi(b->content) < elt)
 				break;
 			top_b_cost++;
+			last = ft_atoi(b->content);
 			b = b->next;
 		}
 
 	}
-
-
 	// ft_printf("cost for %d: %d\n\ta: %d\n\tb: %d\n", elt, top_a_cost + top_b_cost + 1, top_a_cost, top_b_cost);
 
 	return (top_a_cost + top_b_cost + 1); // +1 vue que on push
@@ -114,6 +138,8 @@ void pass(t_list **a, t_list **b)
 			best_weight = tmp;
 			ra = i;
 			rb = best_weight - 1 - i;
+			// ft_printf("pass cost for %d: %d\n\ta: %d\n\tb: %d\n", ft_atoi(cpy->content), best_weight, i, best_weight - 1 - i);
+
 		}
 		cpy = cpy->next;
 		i++;
@@ -137,32 +163,58 @@ void pass(t_list **a, t_list **b)
 
 }
 
-int	main(void)
+t_list	*build_stack(int count, char **values)
 {
+	t_list	*a = 0x0;
 
+	if (count == 0)
+		return (NULL);
+
+	int i = 0;
+	while (i < count)
+	{
+		ft_lstadd_back(&a, ft_lstnew(values[i]));
+		i++;
+	}
+	return (a);
+}
+
+void	check(t_list *a)
+{
+	while (a->next)
+	{
+		if (ft_atoi(a->content) > ft_atoi(a->next->content))
+		{
+			ft_printf("NOT SORTED\n");
+			return ;
+		}
+		a = a->next;
+	}
+	ft_printf("SORTED\n");
+}
+
+int	main(int argc, char **argv)
+{
 	t_list	*a;
 	t_list	*b;
 
+	argc--;
+	argv++;
+	a = build_stack(argc, argv);
 	b = NULL;
-	a = ft_lstnew("5");
-	ft_lstadd_back(&a, ft_lstnew("2"));
-	ft_lstadd_back(&a, ft_lstnew("7"));
-	ft_lstadd_back(&a, ft_lstnew("1"));
-	ft_lstadd_back(&a, ft_lstnew("6"));
-	ft_lstadd_back(&a, ft_lstnew("3"));
-	ft_lstadd_back(&a, ft_lstnew("9"));
-	ft_lstadd_back(&a, ft_lstnew("4"));
-	ft_lstadd_back(&a, ft_lstnew("8"));
-	// debug_print(a, b, "Init a and b");
+
+	debug_print(a, b, "init a and b");
+
 
 	// fist push 2 element of a to b
 	push_b(&a, &b);
 	push_b(&a, &b);
+	debug_print(a, b, "pb pb");
 
 	while (ft_lstsize(a) > 0)
 	{
 		pass(&a, &b);
-		// debug_print(a, b, "pass");
+		debug_print(a, b, "pass");
 	}
 	while (ft_lstsize(b) > 0)
 	{
@@ -174,5 +226,6 @@ int	main(void)
 	{
 		rotate_a(&a);
 	}
-	// debug_print(a, b, "done");
+	debug_print(a, b, "done");
+	// check(a);
 }
