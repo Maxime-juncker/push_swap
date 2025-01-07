@@ -71,6 +71,50 @@ void	push_b(t_list **a, t_list **b)
 
 }
 
+void	rr(t_list **a, t_list **b)
+{
+	t_list	*tmp;
+
+	if (ft_lstsize(*a) > 1)
+	{
+		tmp = (*a)->next;
+		ft_lstlast(*a)->next = *a;
+		(*a)->next = NULL;
+		*a = tmp;
+	}
+	if (ft_lstsize(*b) > 1)
+	{
+		tmp = (*b)->next;
+		ft_lstlast(*b)->next = *b;
+		(*b)->next = NULL;
+		*b = tmp;
+	}
+	ft_printf("rr\n");
+}
+
+void rrr(t_list **a, t_list **b)
+{
+	t_list	*tmp;
+
+	tmp = *a;
+	while (tmp->next->next)
+		tmp = tmp->next;
+
+	tmp->next->next = *a;
+	*a = tmp->next;
+	tmp->next = NULL;
+
+	tmp = *b;
+	while (tmp->next->next)
+		tmp = tmp->next;
+
+	tmp->next->next = *b;
+	*b = tmp->next;
+	tmp->next = NULL;
+
+	ft_printf("rrr\n");
+}
+
 void	rotate_a(t_list **a)
 {
 	t_list	*tmp;

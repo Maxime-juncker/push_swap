@@ -2,8 +2,7 @@
 
 void	debug_print(t_list *a, t_list *b, const char *action)
 {
-	return;
-
+	return ;
 	ft_printf("-----------------------\n");
 	ft_printf("exec %s:\n", action);
 	while (a || b)
@@ -50,7 +49,7 @@ int	get_min(t_list *lst)
 	return (max);
 }
 
-int	is_biggest(int elt, t_list *b)
+int	is_max(int elt, t_list *b)
 {
 	while (b)
 	{
@@ -73,34 +72,43 @@ int	is_min(int elt, t_list *b)
 }
 // 2 3 3 4
 
-// ! marche pas
-int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
+t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 {
 	// debug_print(a, b, "550");
 	(void)a;
+	t_inst_set	set;
 	// cost of putting move on top
-	int	top_a_cost = idx; // si idx == 0 alors elt top et donc pas de cout pour rotate a
-	int	top_b_cost = 0;
+	if (ft_lstchr_n(a, elt) > ft_lstsize(a) / 2)
+	{
+		set.ra = (ft_lstsize(a) - ft_lstchr_n(a, elt)) * -1; // -1 to tell that it's in reverse
+	}
+	else
+	{
+		set.ra = idx; // si idx == 0 alors elt top et donc pas de cout pour rotate a
+	}
+	set.rb = 0;
+	set.rr = 0;
 
 	if (is_min(elt, b))
 	{
 		int b_min = get_min(b);
 		while (b != NULL && ft_atoi(b->content) != b_min)
 		{
-			top_b_cost++;
+			set.rb++;
 			b = b->next;
 		}
-		top_b_cost++;
+		set.rb++;
 
 	}
-	else if (is_biggest(elt, b))
+	else if (is_max(elt, b))
 	{
 		int b_biggest = get_max(b);
 		while (b != NULL && ft_atoi(b->content) != b_biggest)
 		{
-			top_b_cost++;
+			set.rb++;
 			b = b->next;
 		}
+
 	}
 	else
 	{
@@ -109,55 +117,67 @@ int	get_move_weight(t_list *a, t_list *b, int idx, int elt)
 		{
 			if (last > elt && ft_atoi(b->content) < elt)
 				break;
-			top_b_cost++;
+			set.rb++;
 			last = ft_atoi(b->content);
 			b = b->next;
 		}
 
 	}
+		while (set.ra > 0 && set.rb > 0)
+		{
+			set.rr++;
+			set.ra--;
+			set.rb--;
+		}
+	
 	// ft_printf("cost for %d: %d\n\ta: %d\n\tb: %d\n", elt, top_a_cost + top_b_cost + 1, top_a_cost, top_b_cost);
-
-	return (top_a_cost + top_b_cost + 1); // +1 vue que on push
+	set.weight = abs(set.ra) + set.rb + set.rr + 1;
+	return (set); // +1 vue que on push
 }
 
 void pass(t_list **a, t_list **b)
 {
-	int best_weight = 999;
 	int i = 0;
 
-
-	int ra = 0;
-	int rb = 0;
-	int tmp = 0;
+	t_inst_set set;
+	t_inst_set best_set = {9999, 9999, 9999, 9999};
 	t_list	*cpy = *a;
 	while (cpy)
 	{
-		tmp = get_move_weight(*a, *b, i, ft_atoi(cpy->content));
-		if (tmp < best_weight)
+		set = get_instruction_set(*a, *b, i, ft_atoi(cpy->content));
+		if (set.weight < best_set.weight)
 		{
-			best_weight = tmp;
-			ra = i;
-			rb = best_weight - 1 - i;
-			// ft_printf("pass cost for %d: %d\n\ta: %d\n\tb: %d\n", ft_atoi(cpy->content), best_weight, i, best_weight - 1 - i);
-
+			best_set = set;
 		}
 		cpy = cpy->next;
 		i++;
 	}
 
 	// ft_printf("ra: %d\nrb: %d\n", ra, rb);
-	i = 0;
-	while (i < ra)
+	while (best_set.ra != 0 || best_set.rb != 0 || best_set.rr != 0)
 	{
-		rotate_a(a);
-		i++;
+		if (best_set.rr > 0)
+		{
+			rr(a, b);
+			best_set.rr--;
+		}
+		if (best_set.ra > 0)
+		{
+			rotate_a(a);
+			best_set.ra--;
+		}
+		else if (best_set.ra < 0)
+		{
+			rrotate_a(a);
+			best_set.ra++;
+		}
+		if (best_set.rb > 0)
+		{
+			rotate_b(b);
+			best_set.rb--;
+		}
 	}
-	i = 0;
-	while (i < rb)
-	{
-		rotate_b(b);
-		i++;
-	}
+
 	push_b(a, b);
 	// ft_printf("\n\n");
 
@@ -198,14 +218,15 @@ int	main(int argc, char **argv)
 	t_list	*a;
 	t_list	*b;
 
+	a = NULL;
+	b = NULL;
+
 	argc--;
 	argv++;
 	a = build_stack(argc, argv);
 	b = NULL;
 
-	debug_print(a, b, "init a and b");
-
-
+	debug_print(a, b, "Init a and b");
 	// fist push 2 element of a to b
 	push_b(&a, &b);
 	push_b(&a, &b);
@@ -220,12 +241,23 @@ int	main(int argc, char **argv)
 	{
 		push_a(&a, &b);
 	}
-	// debug_print(a, b, "push a");
 	int min = get_min(a);
-	while (ft_atoi(a->content) != min)
+
+	if (ft_lstchr_n(a, min) > ft_lstsize(a) / 2)
 	{
-		rotate_a(&a);
+		while (ft_atoi(a->content) != min)
+		{
+			rrotate_a(&a);
+		}
+	}
+	else
+	{
+		while (ft_atoi(a->content) != min)
+		{
+			rotate_a(&a);
+		}
+
 	}
 	debug_print(a, b, "done");
-	// check(a);
+	check(a);
 }
