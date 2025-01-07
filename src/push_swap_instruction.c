@@ -6,41 +6,11 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:32:07 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 12:32:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:41:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
-
-void	swap_a(t_list **a)
-{
-	t_list	*tmp;
-
-	if (a == NULL)
-		return ;
-	if (*a == NULL || ft_lstsize(*a) < 2)
-		return ;
-	tmp = (*a)->next;
-	(*a)->next = tmp->next;
-	tmp->next = *a;
-	*a = tmp;
-	ft_printf("sa\n");
-}
-
-void	swap_b(t_list **b)
-{
-	t_list	*tmp;
-
-	if (b == NULL)
-		return ;
-	if (*b == NULL || ft_lstsize(*b) < 2)
-		return ;
-	tmp = (*b)->next;
-	(*b)->next = tmp->next;
-	tmp->next = *b;
-	*b = tmp;
-	ft_printf("sb\n");
-}
 
 void	push_a(t_list **a, t_list **b)
 {

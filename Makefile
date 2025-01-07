@@ -5,6 +5,7 @@ MAKEFLAGS += --no-print-directory
 SRC =	push_swap.c					\
 		push_swap_instruction.c		\
 		solver.c					\
+		utils.c						\
 
 OBJ = $(SRC:.c=.o)
 
