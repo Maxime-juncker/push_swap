@@ -13,6 +13,7 @@ BIN_D = bin/
 LOG_D = log/
 INCLUDES_D = -Iincludes/ -Ilibft/includes/
 
+
 OBJ := $(addprefix $(OBJ_D), $(OBJ))
 SRCS := $(addprefix $(SRCS_D), $(SRCS))
 
@@ -27,14 +28,18 @@ RM = rm -fr
 ARGS = 377 523 738 909 254
 R_ARGS=$(shell python3 rand_numbers.py)
 
-all: $(BIN_D)$(NAME)
+all:
+	$(MAKE) libft
+	$(MAKE) $(BIN_D)$(NAME)
+
+.PHONY: libft
+libft:
+	$(MAKE) -C libft
+
 
 $(BIN_D)$(NAME): $(OBJ) $(BIN_D)
-	echo "$(YELLOW)[MAKE]: libft$(RESET)"
-	$(MAKE) -C libft
 	$(CC) $(CFLAGS) $(OBJ) libft/bin/libft.a -o $(BIN_D)$(NAME)
-	echo "$(YELLOW)[CREATING EXE]: $@$(RESET)"
-	echo "$(GREEN)[SUCCESS]: $@$(RESET)"
+	@echo "$(GREEN)[SUCCESS]$(RESET)"
 
 $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h | $(OBJ_D)
 	echo "$(BLUE)[COMPILING]: $@$(RESET)"
@@ -94,9 +99,9 @@ INSTRUCTION_COUNT = $(shell $(BIN_D)./push_swap $(R_ARGS) | wc -l)
 benchmark: all $(LOG_D)
 	$(BIN_D)./push_swap $(R_ARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "\n==================================================================" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
+	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 500 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
 	echo "==================================================================\n" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "push swap took $(INSTRUCTION_COUNT) instructions to sort 100 random numbers"
+	echo "push swap took $(INSTRUCTION_COUNT) instructions to sort 500 random numbers"
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 visu: all
