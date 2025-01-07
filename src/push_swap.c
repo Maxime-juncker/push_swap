@@ -93,10 +93,7 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 	{
 		int b_min = get_min(b);
 		if (ft_lstchr_n(b, b_min) > ft_lstsize(b) / 2)
-		{
 			set.rb = (ft_lstsize(b) - ft_lstchr_n(b, b_min) - 1) * -1;
-			// ft_printf("HAAAAA\n");
-		}
 		else
 			set.rb = ft_lstchr_n(b, b_min) + 1;
 	}
@@ -104,14 +101,9 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 	{
 		int b_biggest = get_max(b);
 		if (ft_lstchr_n(b, b_biggest) > ft_lstsize(b) / 2)
-		{
 			set.rb = (ft_lstsize(b) - ft_lstchr_n(b, b_biggest)) * -1;
-			// ft_printf("HAAAAA\n");
-		}
 		else
-		{
 			set.rb = ft_lstchr_n(b, b_biggest);
-		}
 	}
 	else
 	{
@@ -126,10 +118,7 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 			b = b->next;
 		}
 		if (set.rb > size / 2)
-		{
 			set.rb = (size - set.rb) * -1;
-		}
-
 	}
 	while (set.ra > 0 && set.rb > 0)
 	{
@@ -138,8 +127,15 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 		set.rb--;
 	}
 
+	while (set.ra < 0 && set.rb < 0)
+	{
+		set.rr--;
+		set.ra++;
+		set.rb++;
+	}
+
 	// ft_printf("cost for %d: %d\n\ta: %d\n\tb: %d\n", elt, top_a_cost + top_b_cost + 1, top_a_cost, top_b_cost);
-	set.weight = abs(set.ra) + abs(set.rb) + set.rr + 1; // +1 vue que on push
+	set.weight = abs(set.ra) + abs(set.rb) + abs(set.rr) + 1; // +1 vue que on push
 	return (set);
 }
 
@@ -168,6 +164,11 @@ void pass(t_list **a, t_list **b)
 		{
 			rr(a, b);
 			best_set.rr--;
+		}
+		else if (best_set.rr < 0)
+		{
+			rrr(a, b);
+			best_set.rr++;
 		}
 		if (best_set.ra > 0)
 		{
