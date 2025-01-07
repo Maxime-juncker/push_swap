@@ -6,13 +6,13 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 13:56:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/06 14:08:53 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:40:21 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstchr_n(t_list* lst, int n)
+int	ft_lstchr_n(t_list *lst, int n)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ int	ft_lstchr_n(t_list* lst, int n)
 	return (-1);
 }
 
-t_list	*ft_lstchr(t_list* lst, void* content)
+t_list	*ft_lstchr(t_list *lst, void *content)
 {
 	if (lst == NULL)
 		return (NULL);
