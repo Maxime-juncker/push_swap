@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:48:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:30:36 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:57:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,21 @@ void	final_pass(t_list **a, t_list **b)
 
 	while (ft_lstsize(*b) > 0)
 	{
-		push_a(a, b);
+		push_stack(a, b, 'a');
 	}
 	min = get_min(*a);
 	if (ft_lstchr_n(*a, min) > ft_lstsize(*a) / 2)
 	{
 		while (ft_atoi((*a)->content) != min)
 		{
-			rrotate_a(a);
+			rrotate_stack(a, 'a');
 		}
 	}
 	else
 	{
 		while (ft_atoi((*a)->content) != min)
 		{
-			rotate_a(a);
+			rotate_stack(a, 'a');
 		}
 	}
 }
@@ -78,8 +78,8 @@ int	main(int argc, char **argv)
 	a = build_stack(argc, argv);
 	b = NULL;
 	debug_print(a, b, "Init a and b");
-	push_b(&a, &b);
-	push_b(&a, &b);
+	push_stack(&b, &a, 'b');
+	push_stack(&b, &a, 'b');
 	debug_print(a, b, "pb pb");
 	while (ft_lstsize(a) > 0)
 	{

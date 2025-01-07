@@ -6,30 +6,20 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:32:07 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:41:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:58:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-void	push_a(t_list **a, t_list **b)
+void	push_stack(t_list **to, t_list **from, char name)
 {
 	t_list	*tmp;
 
-	tmp = (*b)->next;
-	ft_lstadd_front(a, *b);
-	*b = tmp;
-	ft_printf("pa\n");
-}
-
-void	push_b(t_list **a, t_list **b)
-{
-	t_list	*tmp;
-
-	tmp = (*a)->next;
-	ft_lstadd_front(b, *a);
-	*a = tmp;
-	ft_printf("pb\n");
+	tmp = (*from)->next;
+	ft_lstadd_front(to, *from);
+	*from = tmp;
+	ft_printf("p%c\n", name);
 }
 
 void	rr(t_list **a, t_list **b)
@@ -53,7 +43,7 @@ void	rr(t_list **a, t_list **b)
 	ft_printf("rr\n");
 }
 
-void rrr(t_list **a, t_list **b)
+void	rrr(t_list **a, t_list **b)
 {
 	t_list	*tmp;
 
@@ -72,50 +62,26 @@ void rrr(t_list **a, t_list **b)
 	ft_printf("rrr\n");
 }
 
-void	rotate_a(t_list **a)
+void	rotate_stack(t_list **s, char name)
 {
 	t_list	*tmp;
 
-	tmp = (*a)->next;
-	ft_lstlast(*a)->next = *a;
-	(*a)->next = NULL;
-	*a = tmp;
-	ft_printf("ra\n");
+	tmp = (*s)->next;
+	ft_lstlast(*s)->next = *s;
+	(*s)->next = NULL;
+	*s = tmp;
+	ft_printf("r%c\n", name);
 }
 
-void	rrotate_a(t_list **a)
+void	rrotate_stack(t_list **s, char name)
 {
 	t_list	*tmp;
 
-	tmp = *a;
+	tmp = *s;
 	while (tmp->next->next)
 		tmp = tmp->next;
-	tmp->next->next = *a;
-	*a = tmp->next;
+	tmp->next->next = *s;
+	*s = tmp->next;
 	tmp->next = NULL;
-	ft_printf("rra\n");
-}
-
-void	rotate_b(t_list **b)
-{
-	t_list	*tmp;
-
-	tmp = (*b)->next;
-	ft_lstlast(*b)->next = *b;
-	(*b)->next = NULL;
-	*b = tmp;
-	ft_printf("rb\n");
-}
-
-void	rrotate_b(t_list **b)
-{
-	t_list	*tmp;
-
-	tmp = *b;
-	while (tmp->next->next)
-		tmp = tmp->next;
-	tmp->next->next = *b;
-	*b = tmp->next;
-	tmp->next = NULL;
-	ft_printf("rrb\n");
+	ft_printf("rr%c\n", name);
 }

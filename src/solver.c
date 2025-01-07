@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:57:37 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:11:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:57:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,22 +120,22 @@ void	exec_set(t_list **a, t_list **b, t_inst_set set)
 		}
 		if (set.ra > 0)
 		{
-			rotate_a(a);
+			rotate_stack(a, 'a');
 			set.ra--;
 		}
 		else if (set.ra < 0)
 		{
-			rrotate_a(a);
+			rrotate_stack(a, 'a');
 			set.ra++;
 		}
 		if (set.rb > 0)
 		{
-			rotate_b(b);
+			rotate_stack(b, 'b');
 			set.rb--;
 		}
 		else if (set.rb < 0)
 		{
-			rrotate_b(b);
+			rrotate_stack(b, 'b');
 			set.rb++;
 		}
 	}
@@ -162,5 +162,5 @@ void	pass(t_list **a, t_list **b)
 		i++;
 	}
 	exec_set(a, b, best_set);
-	push_b(a, b);
+	push_stack(b, a, 'b');
 }
