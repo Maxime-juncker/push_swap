@@ -92,27 +92,31 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 	if (is_min(elt, b))
 	{
 		int b_min = get_min(b);
-		while (b != NULL && ft_atoi(b->content) != b_min)
+		if (ft_lstchr_n(b, b_min) > ft_lstsize(b) / 2)
 		{
-			set.rb++;
-			b = b->next;
+			set.rb = (ft_lstsize(b) - ft_lstchr_n(b, b_min) - 1) * -1;
+			// ft_printf("HAAAAA\n");
 		}
-		set.rb++;
-
+		else
+			set.rb = ft_lstchr_n(b, b_min) + 1;
 	}
 	else if (is_max(elt, b))
 	{
 		int b_biggest = get_max(b);
-		while (b != NULL && ft_atoi(b->content) != b_biggest)
+		if (ft_lstchr_n(b, b_biggest) > ft_lstsize(b) / 2)
 		{
-			set.rb++;
-			b = b->next;
+			set.rb = (ft_lstsize(b) - ft_lstchr_n(b, b_biggest)) * -1;
+			// ft_printf("HAAAAA\n");
 		}
-
+		else
+		{
+			set.rb = ft_lstchr_n(b, b_biggest);
+		}
 	}
 	else
 	{
 		int last = ft_atoi(ft_lstlast(b)->content);
+		int size = ft_lstsize(b);
 		while (b != NULL)
 		{
 			if (last > elt && ft_atoi(b->content) < elt)
@@ -121,18 +125,22 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 			last = ft_atoi(b->content);
 			b = b->next;
 		}
+		if (set.rb > size / 2)
+		{
+			set.rb = (size - set.rb) * -1;
+		}
 
 	}
-		while (set.ra > 0 && set.rb > 0)
-		{
-			set.rr++;
-			set.ra--;
-			set.rb--;
-		}
-	
+	while (set.ra > 0 && set.rb > 0)
+	{
+		set.rr++;
+		set.ra--;
+		set.rb--;
+	}
+
 	// ft_printf("cost for %d: %d\n\ta: %d\n\tb: %d\n", elt, top_a_cost + top_b_cost + 1, top_a_cost, top_b_cost);
-	set.weight = abs(set.ra) + set.rb + set.rr + 1;
-	return (set); // +1 vue que on push
+	set.weight = abs(set.ra) + abs(set.rb) + set.rr + 1; // +1 vue que on push
+	return (set);
 }
 
 void pass(t_list **a, t_list **b)
@@ -175,6 +183,11 @@ void pass(t_list **a, t_list **b)
 		{
 			rotate_b(b);
 			best_set.rb--;
+		}
+		else if (best_set.rb < 0)
+		{
+			rrotate_b(b);
+			best_set.rb++;
 		}
 	}
 
@@ -221,13 +234,29 @@ int	main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 
+	// ft_lstadd_back(&a, ft_lstnew("4"));
+	// ft_lstadd_back(&b, ft_lstnew("19"));
+	// ft_lstadd_back(&b, ft_lstnew("13"));
+	// ft_lstadd_back(&b, ft_lstnew("9"));
+	// ft_lstadd_back(&b, ft_lstnew("8"));
+	// ft_lstadd_back(&b, ft_lstnew("7"));
+	// ft_lstadd_back(&b, ft_lstnew("6"));
+	// ft_lstadd_back(&b, ft_lstnew("5"));
+	// ft_lstadd_back(&b, ft_lstnew("2"));
+	// ft_lstadd_back(&b, ft_lstnew("1"));
+	debug_print(a, b, "Init a and b");
+
+	// pass(&a, &b);
+	// debug_print(a, b, "pass");
+	// return 0;
 	argc--;
 	argv++;
 	a = build_stack(argc, argv);
 	b = NULL;
 
-	debug_print(a, b, "Init a and b");
 	// fist push 2 element of a to b
+
+	
 	push_b(&a, &b);
 	push_b(&a, &b);
 	debug_print(a, b, "pb pb");

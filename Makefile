@@ -24,7 +24,7 @@ RESET 	= \033[0m
 BLUE 	= \033[34m
 
 RM = rm -fr
-ARGS = 75 13 57 97 28
+ARGS = 377 523 738 909 254
 R_ARGS=$(shell python3 rand_numbers.py)
 
 all: $(BIN_D)$(NAME)
