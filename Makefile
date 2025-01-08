@@ -46,7 +46,7 @@ $(BIN_D)$(NAME): $(OBJ) $(BIN_D)
 	$(CC) $(CFLAGS) $(OBJ) libft/bin/libft.a -o $(BIN_D)$(NAME)
 	@echo "$(GREEN)[SUCCESS]$(RESET)"
 
-$(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h | $(OBJ_D)
+$(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h libft/bin/libft.a | $(OBJ_D)
 	echo "$(BLUE)[COMPILING]: $@$(RESET)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
