@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 09:51:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:29:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt);
 // pass.c
 void		final_pass(t_list **a, t_list **b);
 void		pass(t_list **a, t_list **b);
+
+// parser.c
+t_list		*build_stack(int count, char **values);
 
 // debug.c
 void		debug_print(t_list *a, t_list *b, const char *action);

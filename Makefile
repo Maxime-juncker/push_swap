@@ -8,6 +8,7 @@ SRC =	push_swap.c					\
 		utils.c						\
 		pass.c						\
 		debug.c						\
+		parser.c					\
 
 OBJ = $(SRC:.c=.o)
 
