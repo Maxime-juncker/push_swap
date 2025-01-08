@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:58:12 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:51:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,25 @@ typedef struct s_inst_set
 }	t_inst_set;
 
 // push_swap_instruction.c
-void	push_stack(t_list **to, t_list **from, char name);
-void	rotate_stack(t_list **s, char name);
-void	rrotate_stack(t_list **s, char name);
-void	rr(t_list **a, t_list **b);
-void	rrr(t_list **a, t_list **b);
+void		push_stack(t_list **to, t_list **from, char name);
+void		rotate_stack(t_list **s, char name, t_inst_set *set);
+void		rrotate_stack(t_list **s, char name, t_inst_set *set);
+void		rr(t_list **a, t_list **b, t_inst_set *set);
+void		rrr(t_list **a, t_list **b, t_inst_set *set);
 
 // utils.c
-void	debug_print(t_list *a, t_list *b, const char *action);
+int			get_min(t_list *lst);
+int			get_max(t_list *lst);
 
 // solver.c
-void	pass(t_list **a, t_list **b);
+t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt);
 
-int		get_min(t_list *lst);
+// pass.c
+void		final_pass(t_list **a, t_list **b);
+void		pass(t_list **a, t_list **b);
+
+// debug.c
+void		debug_print(t_list *a, t_list *b, const char *action);
+void		check(t_list *a);
 
 #endif //PUSH_SWAP_H

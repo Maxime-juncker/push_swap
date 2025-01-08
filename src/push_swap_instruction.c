@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:32:07 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:58:07 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 08:37:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	push_stack(t_list **to, t_list **from, char name)
 	ft_printf("p%c\n", name);
 }
 
-void	rr(t_list **a, t_list **b)
+void	rr(t_list **a, t_list **b, t_inst_set *set)
 {
 	t_list	*tmp;
 
@@ -40,10 +40,11 @@ void	rr(t_list **a, t_list **b)
 		(*b)->next = NULL;
 		*b = tmp;
 	}
+	set->rr--;
 	ft_printf("rr\n");
 }
 
-void	rrr(t_list **a, t_list **b)
+void	rrr(t_list **a, t_list **b, t_inst_set *set)
 {
 	t_list	*tmp;
 
@@ -59,10 +60,11 @@ void	rrr(t_list **a, t_list **b)
 	tmp->next->next = *b;
 	*b = tmp->next;
 	tmp->next = NULL;
+	set->rr++;
 	ft_printf("rrr\n");
 }
 
-void	rotate_stack(t_list **s, char name)
+void	rotate_stack(t_list **s, char name, t_inst_set *set)
 {
 	t_list	*tmp;
 
@@ -71,9 +73,15 @@ void	rotate_stack(t_list **s, char name)
 	(*s)->next = NULL;
 	*s = tmp;
 	ft_printf("r%c\n", name);
+	if (set == NULL)
+		return ;
+	if (name == 'a')
+		set->ra--;
+	else
+		set->rb--;
 }
 
-void	rrotate_stack(t_list **s, char name)
+void	rrotate_stack(t_list **s, char name, t_inst_set *set)
 {
 	t_list	*tmp;
 
@@ -84,4 +92,10 @@ void	rrotate_stack(t_list **s, char name)
 	*s = tmp->next;
 	tmp->next = NULL;
 	ft_printf("rr%c\n", name);
+	if (set == NULL)
+		return ;
+	if (name == 'a')
+		set->ra++;
+	else
+		set->rb++;
 }

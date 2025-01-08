@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:48:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/07 13:57:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:40:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,6 @@ t_list	*build_stack(int count, char **values)
 		i++;
 	}
 	return (a);
-}
-
-void	check(t_list *a)
-{
-	while (a->next)
-	{
-		if (ft_atoi(a->content) > ft_atoi(a->next->content))
-		{
-			ft_printf("NOT SORTED\n");
-			return ;
-		}
-		a = a->next;
-	}
-	ft_printf("SORTED\n");
-}
-
-void	final_pass(t_list **a, t_list **b)
-{
-	int		min;
-
-	while (ft_lstsize(*b) > 0)
-	{
-		push_stack(a, b, 'a');
-	}
-	min = get_min(*a);
-	if (ft_lstchr_n(*a, min) > ft_lstsize(*a) / 2)
-	{
-		while (ft_atoi((*a)->content) != min)
-		{
-			rrotate_stack(a, 'a');
-		}
-	}
-	else
-	{
-		while (ft_atoi((*a)->content) != min)
-		{
-			rotate_stack(a, 'a');
-		}
-	}
 }
 
 int	main(int argc, char **argv)

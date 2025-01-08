@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_numbers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 13:21:42 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 09:36:37 by mjuncker         ###   ########.fr       */
+/*   Created: 2025/01/07 14:00:07 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/01/08 09:50:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <push_swap.h>
-
-int	get_max(t_list *lst)
+int	ft_abs(int n)
 {
-	int	max;
-
-	max = ft_atoi(lst->content);
-	while (lst)
-	{
-		if (ft_atoi(lst->content) > max)
-			max = ft_atoi(lst->content);
-		lst = lst->next;
-	}
-	return (max);
+	if (n < 0)
+		return (n * -1);
+	return (n);
 }
 
-int	get_min(t_list *lst)
+int	ft_min(int a, int b)
 {
-	int	min;
+	if (a < b)
+		return (a);
+	return (b);
+}
 
-	min = ft_atoi(lst->content);
-	while (lst)
-	{
-		if (ft_atoi(lst->content) < min)
-			min = ft_atoi(lst->content);
-		lst = lst->next;
-	}
-	return (min);
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:49:29 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/06 14:09:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:50:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int		ft_atoi(const char *nptr);
 int		ft_lstsize(t_list *lst);
 int		ft_putaddr(long int nbr, char *base, int fd);
 int		ft_printf(const char *s, ...);
+int		ft_abs(int n);
+int		ft_min(int a, int b);
+int		ft_max(int a, int b);
 
 int		ft_putnbr_fd(int n, int fd);
 int		ft_putchar_fd(char c, int fd);

@@ -6,6 +6,8 @@ SRC =	push_swap.c					\
 		push_swap_instruction.c		\
 		solver.c					\
 		utils.c						\
+		pass.c						\
+		debug.c						\
 
 OBJ = $(SRC:.c=.o)
 
