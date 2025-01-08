@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:41:50 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 15:35:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:46:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ static int	check_errors(t_list *a)
 	while (a)
 	{
 		tmp = ft_atoi(a->content);
-		i = 0;
-		while (((char *)a->content)[i])
+		i = -1;
+		while (((char *)a->content)[++i])
 		{
 			if (ft_isdigit(((char *)a->content)[i]) == 0 && \
-			!(i == 0 && ((char *)a->content)[i] == '-'))
+			!(i == 0 && ((char *)a->content)[i] == '-' && \
+			ft_strlen((char *)a->content) > 1))
 				return (1);
-			i++;
 		}
 		cpy = a->next;
 		while (cpy)
