@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:48:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 12:21:52 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:56:42 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ int	main(int argc, char **argv)
 	check(a);
 	ft_lstclear(&a, &free);
 	ft_lstclear(&b, &free);
+	ft_printf("%d\n", ft_strlen("\033[31m"));
 }
