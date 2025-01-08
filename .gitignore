@@ -57,3 +57,4 @@ obj/
 bin/
 log/
 push_swap_visualizer/
+*.ini

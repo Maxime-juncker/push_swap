@@ -6,13 +6,12 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:41:50 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 14:31:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/08 15:35:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-#include <stdio.h>
 static void	error_exit(t_list *a)
 {
 	if (a != NULL)
@@ -46,7 +45,8 @@ static int	check_errors(t_list *a)
 		i = 0;
 		while (((char *)a->content)[i])
 		{
-			if (ft_isdigit(((char *)a->content)[i]) == 0 && !(i == 0 && ((char *)a->content)[i] == '-'))
+			if (ft_isdigit(((char *)a->content)[i]) == 0 && \
+			!(i == 0 && ((char *)a->content)[i] == '-'))
 				return (1);
 			i++;
 		}
