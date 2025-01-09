@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:41:50 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 15:46:11 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/09 08:38:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_list	*build_stack(int count, char **values)
 	t_list	*a;
 
 	if (count == 0)
-		error_exit(NULL);
+		exit(0);
 	if (count == 1)
 	{
 		tmp = ft_split(*values, ' ');
