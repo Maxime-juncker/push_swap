@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:32:07 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 08:37:11 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/09 09:20:37 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	push_stack(t_list **to, t_list **from, char name)
 {
 	t_list	*tmp;
 
+	if (ft_lstsize(*from) == 0)
+		return ;
 	tmp = (*from)->next;
 	ft_lstadd_front(to, *from);
 	*from = tmp;
