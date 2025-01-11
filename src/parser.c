@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:41:50 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/09 08:38:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/10 10:25:48 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ static void	error_exit(t_list *a)
 		ft_lstclear(&a, &free);
 	ft_putstr_fd("\033[31mError\n\033[0m", STDERR_FILENO);
 	exit (1);
+}
+
+void	overflow_error(int n, void* param)
+{
+	(void)n;
+	error_exit((t_list *)param);
 }
 
 static void	cleanup(char **arr)
@@ -41,7 +47,7 @@ static int	check_errors(t_list *a)
 
 	while (a)
 	{
-		tmp = ft_atoi(a->content);
+		tmp = overflow_check(a->content, &overflow_error, (void*)a);
 		i = -1;
 		while (((char *)a->content)[++i])
 		{

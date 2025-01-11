@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/09 09:23:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:47:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ int			get_max(t_list *lst);
 
 // solver.c
 t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt);
+int	get_rb(t_list *b, int elt);
 
 // pass.c
 void		final_pass(t_list **a, t_list **b);
-void		pass(t_list **a, t_list **b);
+int			pass(t_list **a, t_list **b, int original_size);
+void		swap_stack(t_list **a, char action);
 
 // parser.c
 t_list		*build_stack(int count, char **values);
 
 // debug.c
 void		debug_print(t_list *a, t_list *b, const char *action);
-void		check(t_list *a);
+int		check(t_list *a);
 
 #endif //PUSH_SWAP_H

@@ -1,5 +1,5 @@
 import random
 
-random_numbers = random.sample(range(-500, 1000), 10)
+random_numbers = random.sample(range(-500, 1000), 5)
 for	n in random_numbers:
 	print(n, end=" ")

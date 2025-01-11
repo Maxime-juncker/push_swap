@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:49:29 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/08 09:50:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:10:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ int		ft_tolower(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *nptr);
+int		overflow_check(const char* s, void(*f)(int, void*), void* param);
 int		ft_lstsize(t_list *lst);
 int		ft_putaddr(long int nbr, char *base, int fd);
 int		ft_printf(const char *s, ...);
+
 int		ft_abs(int n);
-int		ft_min(int a, int b);
 int		ft_max(int a, int b);
+int		ft_min(int a, int b);
 
 int		ft_putnbr_fd(int n, int fd);
 int		ft_putchar_fd(char c, int fd);
@@ -87,8 +89,14 @@ char	**ft_split(char const *s, char c);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void	ft_lstprint(t_list *lst);
-t_list	*ft_lstchr(t_list *lst, void *content);
 int		ft_lstchr_n(t_list *lst, int n);
+t_list	*ft_lstchr(t_list *lst, void *content);
+
+// Debug
+void	debug_color(char *msg, char *color);
+void	warning(char *msg);
+void	success(char *msg);
+void	error(char *msg);
+void	alert(char *msg);
 
 #endif
