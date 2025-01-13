@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 09:30:39 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 14:05:23 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 09:01:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,12 @@ void	sort_3(t_list **a, t_list **b)
 		if (get_min(*a) > elt)
 		{
 			tmp = get_min(*a);
-
-				set.ra = (ft_lstchr_n(*a, tmp));
+			set.ra = (ft_lstchr_n(*a, tmp));
 		}
 		else if (get_max(*a) < elt)
 		{
 			tmp = get_max(*a);
-			// if (ft_lstchr_n(*a, tmp) > ft_lstsize(*a) / 2)
-			// 	set.ra = (ft_lstsize(*a) - ft_lstchr_n(*a, tmp) - 1) * -1;
-			// else
-				set.ra = (ft_lstchr_n(*a, tmp) + 1);
+			set.ra = (ft_lstchr_n(*a, tmp) + 1);
 		}
 		else
 		{
@@ -127,10 +123,16 @@ int	pass(t_list **a, t_list **b, int original_size)
 	t_list		*cpy;
 	int			i;
 
-	if (original_size < 10 && ft_lstsize(*a) == 3)
+	if (original_size < REVERSE_MAX && ft_lstsize(*a) == 3)
 	{
 		sort_3(a, b);
 		return (0);
+	}
+	else if (ft_lstsize(*b) == 0)
+	{
+		push_stack(b, a, 'b');
+		debug_print(*a, *b, "pb pb");
+		
 	}
 	cpy = *a;
 	best_set.weight = MAX_INT;

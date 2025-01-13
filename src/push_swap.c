@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:48:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 13:46:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 09:01:34 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ void	start(t_list **a, t_list **b)
 		swap_stack(a, 'a');
 		end(*a, *b);
 	}
-	push_stack(b, a, 'b');
-	push_stack(b, a, 'b');
-	debug_print(*a, *b, "pb pb");
 }
 
 int	main(int argc, char **argv)

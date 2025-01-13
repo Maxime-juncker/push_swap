@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:04:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 13:47:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 08:29:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef DEBUG
 #  define DEBUG 0
+# endif
+
+# ifndef REVERSE_MAX
+#  define REVERSE_MAX 10
 # endif
 
 # include "libft.h"
