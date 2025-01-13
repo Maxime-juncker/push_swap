@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solver.c                                           :+:      :+:    :+:   */
+/*   solver_b.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:57:37 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 11:50:02 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:20:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,27 @@ t_inst_set	get_instruction_set(t_list *a, t_list *b, int idx, int elt)
 	set = get_rr(set);
 	set.weight = ft_abs(set.ra) + ft_abs(set.rb) + ft_abs(set.rr) + 1;
 	return (set);
+}
+
+t_inst_set	get_best_set(t_list **a, t_list **b)
+{
+	t_inst_set	best_set;
+	t_inst_set	set;
+	t_list		*cpy;
+	int			i;
+
+	cpy = *a;
+	best_set.weight = MAX_INT;
+	i = 0;
+	while (cpy)
+	{
+		set = get_instruction_set(*a, *b, i, ft_atoi(cpy->content));
+		if (set.weight < best_set.weight)
+		{
+			best_set = set;
+		}
+		cpy = cpy->next;
+		i++;
+	}
+	return (best_set);
 }

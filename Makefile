@@ -5,11 +5,13 @@ MAKEFLAGS += --no-print-directory
 
 SRC =	push_swap.c					\
 		push_swap_instruction.c		\
-		solver.c					\
+		solver_a.c					\
+		solver_b.c					\
 		utils.c						\
 		pass.c						\
 		debug.c						\
 		parser.c					\
+		errors.c					\
 
 OBJ = $(SRC:.c=.o)
 
@@ -31,7 +33,7 @@ YELLOW 	= \033[33m
 BLUE 	= \033[34m
 
 RM = rm -fr
-ARGS = 377 523 738 909 254
+ARGS = 451 222 117 441 280
 R_ARGS=$(shell python3 rand_numbers.py)
 
 all:
@@ -100,14 +102,10 @@ rdebug: all $(LOG_D)
 	cat $(LOG_D)$(shell date --iso=seconds).log
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
-INSTRUCTION_COUNT = $(shell $(BIN_D)./push_swap $(R_ARGS) | wc -l)
+INSTRUCTION_COUNT =  | wc -l)
 .PHONY: benchmark
-benchmark: all $(LOG_D)
-	$(BIN_D)./push_swap $(R_ARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "\n==================================================================" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "||	push swap took $(INSTRUCTION_COUNT) instructions to sort 500 random numbers	||" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "==================================================================\n" >> $(LOG_D)benchmark_$(shell date --iso=seconds).log
-	echo "push swap took $(INSTRUCTION_COUNT) instructions to sort 500 random numbers"
+valgrind: all $(LOG_D)
+	$(shell valgrind --leak-check=full ./$(BIN_D)push_swap $(R_ARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log)
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 visu: all

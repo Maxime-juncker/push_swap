@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 12:48:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/13 09:01:34 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:57:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	swap_stack(t_list **s, char name)
 	ft_printf("s%c\n", name);
 }
 
-
 void	start(t_list **a, t_list **b)
 {
 	if (check(*a) || ft_lstsize(*a) == 1)
@@ -47,6 +46,11 @@ void	start(t_list **a, t_list **b)
 	if (ft_lstsize(*a) == 2)
 	{
 		swap_stack(a, 'a');
+		end(*a, *b);
+	}
+	if (ft_lstsize(*a) == 3)
+	{
+		sort_3(a);
 		end(*a, *b);
 	}
 }

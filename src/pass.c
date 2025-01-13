@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 09:30:39 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/13 09:01:57 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:21:04 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	final_pass(t_list **a, t_list **b)
 	}
 }
 
-static void	exec_set(t_list **a, t_list **b, t_inst_set set)
+void	exec_set(t_list **a, t_list **b, t_inst_set set)
 {
 	while (set.ra != 0 || set.rb != 0 || set.rr != 0)
 	{
@@ -56,98 +56,20 @@ static void	exec_set(t_list **a, t_list **b, t_inst_set set)
 	}
 }
 
-void	sort_3(t_list **a, t_list **b)
-{
-	int	max;
-
-	max = get_max(*a);
-	while (ft_atoi(ft_lstlast(*a)->content) != max)
-	{
-		if (ft_lstchr_n(*a, max) == 0)
-			rotate_stack(a, 'a', NULL);
-		else
-			rrotate_stack(a, 'a', NULL);
-	}
-	if (ft_atoi((*a)->content) > ft_atoi((*a)->next->content))
-		swap_stack(a, 'a');
-	debug_print(*a, *b, "a is sorted");
-
-		t_inst_set	set;
-	while ((*b) != NULL)
-	{
-		int elt = ft_atoi((*b)->content);
-		int tmp;
-		set.rb = 0;
-		set.ra = 0;
-		set.rr = 0;
-		if (get_min(*a) > elt)
-		{
-			tmp = get_min(*a);
-			set.ra = (ft_lstchr_n(*a, tmp));
-		}
-		else if (get_max(*a) < elt)
-		{
-			tmp = get_max(*a);
-			set.ra = (ft_lstchr_n(*a, tmp) + 1);
-		}
-		else
-		{
-			int	tmp;
-			int	size;
-			t_list *cpy = *a;
-
-			size = ft_lstsize(cpy);
-			tmp = ft_atoi(ft_lstlast(cpy)->content);
-			while (cpy != NULL)
-			{
-				if (tmp < elt && ft_atoi(cpy->content) > elt)
-					break ;
-				set.ra++;
-				tmp = ft_atoi(cpy->content);
-				cpy = cpy->next;
-			}
-			if (set.ra > size / 2)
-				set.ra = (size - set.ra) * -1;
-		}
-		exec_set(a, b, set);
-		push_stack(a, b, 'a');
-		debug_print(*a, *b, "pass");
-
-	}
-
-}
 int	pass(t_list **a, t_list **b, int original_size)
 {
-	t_inst_set	set;
-	t_inst_set	best_set;
-	t_list		*cpy;
-	int			i;
-
-	if (original_size < REVERSE_MAX && ft_lstsize(*a) == 3)
-	{
-		sort_3(a, b);
-		return (0);
-	}
-	else if (ft_lstsize(*b) == 0)
+	if (ft_lstsize(*b) == 0)
 	{
 		push_stack(b, a, 'b');
+		push_stack(b, a, 'b');
 		debug_print(*a, *b, "pb pb");
-		
 	}
-	cpy = *a;
-	best_set.weight = MAX_INT;
-	i = 0;
-	while (cpy)
+	if (original_size < REVERSE_MAX && ft_lstsize(*a) == 3)
 	{
-		set = get_instruction_set(*a, *b, i, ft_atoi(cpy->content));
-		if (set.weight < best_set.weight)
-		{
-			best_set = set;
-		}
-		cpy = cpy->next;
-		i++;
+		sort_a(a, b);
+		return (0);
 	}
-	exec_set(a, b, best_set);
+	exec_set(a, b, get_best_set(a, b));
 	push_stack(b, a, 'b');
 	if (ft_lstsize(*a) == 0)
 		return (0);

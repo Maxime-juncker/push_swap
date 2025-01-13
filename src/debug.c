@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 09:35:14 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 14:05:20 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 09:11:17 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	check(t_list *a)
 			return (0);
 		}
 		a = a->next;
-
 	}
 	return (1);
 }

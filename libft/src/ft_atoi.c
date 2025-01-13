@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:28:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/11 13:04:56 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:12:00 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,51 @@ int	ft_atoi(const char *nptr)
 	return ((int)n);
 }
 
-int overflow_check(const char* s, void(*f)(int, void*), void *param)
+int	get_sign(const char *s, int *i)
 {
-    int result;
-    int sign;
-    int i;
+	int	sign;
 
-    i = 0;
-    result = 0;
-    sign = 1;
-    while (s[i] == ' ' || (s[i] >= '\t' && s[i] <= '\r'))
-        i++;
-    if (s[i] == '+' || s[i] == '-')
-    {
-        if (s[i] == '-')
-            sign = -1;
-        i++;
+	sign = 1;
+	while (s[*i] == ' ' || (s[*i] >= '\t' && s[*i] <= '\r'))
+		(*i)++;
+	if (s[*i] == '+' || s[*i] == '-')
+	{
+		if (s[*i] == '-')
+			sign = -1;
+		(*i)++;
 	}
+	return (sign);
+}
+
+int	call_func(int n, void (*f)(int, void *), void *param)
+{
+	warning("overflow atoi");
+	if (f == NULL)
+		return (n);
+	f(n, param);
+	return (n);
+}
+
+int	overflow_check(const char *s, void (*f)(int, void *), void *param)
+{
+	int	result;
+	int	sign;
+	int	i;
+
+	i = 0;
+	result = 0;
+	sign = get_sign(s, &i);
 	while (s[i] >= '0' && s[i] <= '9')
 	{
 		if (result > MAX_INT / 10)
-			return (f(MAX_INT, param), MAX_INT);
+			return (call_func(MAX_INT, f, param));
 		if (result < MIN_INT / 10)
-			return (f(MIN_INT, param), MIN_INT);
+			return (call_func(MIN_INT, f, param));
 		result *= 10;
 		if (result > MAX_INT - (s[i] - '0'))
-			return (f(MAX_INT, param), MAX_INT);
+			return (call_func(MAX_INT, f, param));
 		if (result < MIN_INT + (s[i] - '0'))
-			return (f(MIN_INT, param), MIN_INT);
+			return (call_func(MIN_INT, f, param));
 		if (sign < 0)
 			result -= s[i] - '0';
 		else

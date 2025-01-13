@@ -5,7 +5,7 @@ MAX=0
 
 make
 
-for i in $(seq 1 50);
+for i in $(seq 1 500);
 do
 	COUNT=$(make rdebug | wc -l)
 	if [ $[COUNT-1] -gt $MAX ]; then

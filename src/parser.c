@@ -6,67 +6,11 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 10:41:50 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/10 10:25:48 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:17:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
-
-static void	error_exit(t_list *a)
-{
-	if (a != NULL)
-		ft_lstclear(&a, &free);
-	ft_putstr_fd("\033[31mError\n\033[0m", STDERR_FILENO);
-	exit (1);
-}
-
-void	overflow_error(int n, void* param)
-{
-	(void)n;
-	error_exit((t_list *)param);
-}
-
-static void	cleanup(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-static int	check_errors(t_list *a)
-{
-	t_list	*cpy;
-	int		tmp;
-	int		i;
-
-	while (a)
-	{
-		tmp = overflow_check(a->content, &overflow_error, (void*)a);
-		i = -1;
-		while (((char *)a->content)[++i])
-		{
-			if (ft_isdigit(((char *)a->content)[i]) == 0 && \
-			!(i == 0 && ((char *)a->content)[i] == '-' && \
-			ft_strlen((char *)a->content) > 1))
-				return (1);
-		}
-		cpy = a->next;
-		while (cpy)
-		{
-			if (cpy->content == NULL || ft_atoi(cpy->content) == tmp)
-				return (1);
-			cpy = cpy->next;
-		}
-		a = a->next;
-	}
-	return (0);
-}
 
 static t_list	*create_stack(int count, char **values)
 {
@@ -99,7 +43,7 @@ t_list	*build_stack(int count, char **values)
 	{
 		tmp = ft_split(*values, ' ');
 		if (tmp == NULL)
-			exit(1);
+			error_exit(NULL);
 		i = 0;
 		while (tmp[i])
 			i++;
