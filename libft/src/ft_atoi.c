@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:28:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/01/13 10:12:00 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:08:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	get_sign(const char *s, int *i)
 
 int	call_func(int n, void (*f)(int, void *), void *param)
 {
-	warning("overflow atoi");
+	if (n < 0)
+		warning("underflow atoi");
+	else
+		warning("overflow atoi");
 	if (f == NULL)
 		return (n);
 	f(n, param);
