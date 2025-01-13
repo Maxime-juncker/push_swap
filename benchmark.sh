@@ -10,7 +10,7 @@ do
 	COUNT=$(make rdebug | wc -l)
 	if [ $[COUNT-1] -gt $MAX ]; then
 		MAX=$[COUNT-1]
-		echo -e "push_swap score: \e[31m$[COUNT-1]\e[0m"
+		echo -e "push_swap score: \e[31m$[COUNT-1] (new max)\e[0m"
 	else
 		echo -e "push_swap score: \e[32m$[COUNT-1]\e[0m"
 	fi
