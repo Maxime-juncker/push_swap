@@ -9,12 +9,12 @@ with restricted operation.
 this repo use the Turk algorithm (https://medium.com/@ayogun/push-swap-c1f5d2d41e97)
 
 ## Allowed operations
-- `swap stack: Swap the first 2 elements at the top of stack a.
-Do nothing if there is only one or no elements.`
-- `push stack: Take the first element at the top of b and put it at the top of a.
-Do nothing if b is empty.`
-- `rotate stack: Shift up all elements of stack b by 1.
-The first element becomes the last one.`
+- `swap stack` Swap the first 2 elements at the top of stack a.
+Do nothing if there is only one or no elements.
+- `push stack` Take the first element at the top of b and put it at the top of a.
+Do nothing if b is empty.
+- `rotate stack` Shift up all elements of stack b by 1.
+The first element becomes the last one.
 
 ## Compile it yourself
 first clone the repo
