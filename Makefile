@@ -26,51 +26,66 @@ OBJ := $(addprefix $(OBJ_D), $(OBJ))
 SRCS := $(addprefix $(SRCS_D), $(SRCS))
 
 # colors
-RESET 	= \033[0m
-RED 	= \033[31m
-GREEN 	= \033[32m
-YELLOW 	= \033[33m
-BLUE 	= \033[34m
+RESET 			= \033[0m
+RED 			= \033[31m
+GREEN 			= \033[32m
+YELLOW 			= \033[33m
+BLUE 			= \033[34m
+CURSOR_OFF 		= \e[?25l
+CURSOR_ON 		= \e[?25h
 
 RM = rm -fr
 ARGS = 451 222 117 441 280
 R_ARGS=$(shell python3 rand_numbers.py)
 
-all:
-	$(MAKE) libft
-	$(MAKE) $(BIN_D)$(NAME)
+all: header libft $(BIN_D)$(NAME)
+
 
 .PHONY: libft
 libft:
 	$(MAKE) -C libft
 
+.PHONY: header
+header:
+	printf "$(YELLOW)"
+	printf "\n---------------------------------------------------------------------"
+	printf "\n\t ___ _ _  __  _ _         __  _ _ _   _   ___ "
+	printf "\n\t| o \\ | |/ _|| U |       / _|| | | | / \\ | o \\"
+	printf "\n\t|  _/ U |\\_ \\|   |       \\_ \\| V V || o ||  _/"
+	printf "\n\t|_| |___||__/|_n_|  ___  |__/ \\_n_/ |_n_||_|  "
+	printf "\n\t                   |___|                      "
+	printf "\n\n---------------------------------------------------------------------\n"
+
+	printf "[Author]: $(GREEN)Maxime Juncker"
+	printf "$(YELLOW)\t[github]: $(GREEN)https://github.com/Maxime-juncker\n\n"
 
 $(BIN_D)$(NAME): $(OBJ) $(BIN_D)
+	printf "$(BLUE)compiling: [$$(ls obj | wc -l)/$(shell ls src | wc -l)] [OK]\r\n"
 	$(CC) $(CFLAGS) $(OBJ) libft/bin/libft.a -o $(BIN_D)$(NAME)
-	echo "$(GREEN)[SUCCESS]$(RESET)"
+	printf "$(GREEN)$(NAME): success\n"
+	printf "\n---------------------$(CURSOR_ON)\n\n"
 
 $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h libft/bin/libft.a Makefile | $(OBJ_D)
-	echo "$(BLUE)[COMPILING]: $@$(RESET)"
+	printf "$(CURSOR_OFF)$(BLUE)"
+	printf "compiling: [$$(ls obj | wc -l)/$(shell ls src | wc -l)]\r"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
-	$(MAKE) clean -C ./libft
+	$(MAKE) fclean -C ./libft
+	printf "$(RED)clean: $(NAME)\n\n"
+	printf "$(RED)---------------------\n\n$(RESET)"
 	$(MAKE) clog
-	$(RM) $(OBJ_D)
-	echo "$(RED)[CLEAN]: obj files$(RESET)"
 
 .PHONY: fclean
-fclean: clean
-	$(MAKE) fclean -C ./libft
-	$(RM) $(NAME)
+fclean:
 	$(RM) $(BIN_D)
-	echo "$(RED)[CLEAN]: binaries$(RESET)"
+	$(MAKE) clean
+
 
 .PHONY: clog
 clog:
 	$(RM) $(LOG_D)
-	echo "$(RED)[CLEAN]: log$(RESET)"
 
 .PHONY: re
 re:
@@ -79,15 +94,12 @@ re:
 
 # Create directories
 $(OBJ_D):
-	echo "$(YELLOW)[CREATING]: $(OBJ_D)$(RESET)"
 	mkdir -p $(OBJ_D)
 
 $(LOG_D):
-	echo "$(YELLOW)[CREATING]: $(LOG_D)$(RESET)"
 	mkdir -p $(LOG_D)
 
 $(BIN_D):
-	echo "$(YELLOW)[CREATING]: $(BIN_D)$(RESET)"
 	mkdir -p $(BIN_D)
 
 .PHONY: debug
