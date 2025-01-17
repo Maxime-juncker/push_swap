@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/01/17 13:25:52 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/01/17 13:51:21 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,12 +115,13 @@ $(BIN_D):
 
 .PHONY: clean
 clean:
-	printf "\n$(RED)clean: $(NAME)\n\n$(RESET)"
+	printf "\n$(RED)clean:\t$(NAME)\n\n$(RESET)"
 	$(RM) $(OBJ_D)
 
 
 .PHONY: fclean
 fclean:
+	printf "\n$(RED)fclean:\t$(NAME)$(RESET)"
 	$(MAKE) clean
 	$(RM) $(BIN_D)
 

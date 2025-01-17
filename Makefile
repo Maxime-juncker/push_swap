@@ -72,16 +72,17 @@ $(OBJ_D)%.o : $(SRCS_D)%.c includes/push_swap.h libft/bin/libft.a Makefile | $(O
 
 .PHONY: clean
 clean:
-	$(MAKE) fclean -C ./libft
-	printf "$(RED)clean: $(NAME)\n\n"
+	printf "$(RED)clean:\t$(NAME)\n\n"
+	$(MAKE) clean -C ./libft
 	printf "$(RED)---------------------\n\n$(RESET)"
 	$(MAKE) clog
 
 .PHONY: fclean
 fclean:
+	$(MAKE) fclean -C ./libft
 	$(RM) $(BIN_D)
+	printf "$(RED)fclean:\t$(NAME)\n"
 	$(MAKE) clean
-
 
 .PHONY: clog
 clog:
@@ -112,12 +113,6 @@ debug: all $(LOG_D)
 rdebug: all $(LOG_D)
 	$(BIN_D)./push_swap $(R_ARGS) > $(LOG_D)$(shell date --iso=seconds).log
 	cat $(LOG_D)$(shell date --iso=seconds).log
-	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
-
-INSTRUCTION_COUNT =  | wc -l)
-.PHONY: benchmark
-valgrind: all $(LOG_D)
-	$(shell valgrind --leak-check=full ./$(BIN_D)push_swap $(R_ARGS) > $(LOG_D)benchmark_$(shell date --iso=seconds).log)
 	echo "$(BLUE)[SAVED]: $(LOG_D)$(shell date --iso=seconds).log"
 
 visu: all
