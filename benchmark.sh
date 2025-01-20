@@ -2,19 +2,19 @@
 
 AVRG=0
 MAX=0
-ITERATIONS=100
+ITERATIONS=500
 
 make
 
 for i in $(seq 1 $ITERATIONS);
 do
-	COUNT=$(make rdebug | wc -l)
-	AVRG=$((AVRG + COUNT - 1))
-	if [ $[COUNT-1] -gt $MAX ]; then
-		MAX=$[COUNT-1]
-		echo -e "push_swap score: \e[31m$[COUNT-1] (new max)\e[0m"
+	COUNT=$(ARG="$(python3 rand_numbers.py)"; ./bin/push_swap "$ARG" | wc -l)
+	AVRG=$((AVRG + COUNT))
+	if [ $[COUNT] -gt $MAX ]; then
+		MAX=$[COUNT]
+		echo -e "push_swap score: \e[31m$[COUNT] (new max)\e[0m"
 	else
-		echo -e "push_swap score: \e[32m$[COUNT-1]\e[0m"
+		echo -e "push_swap score: \e[32m$[COUNT]\e[0m"
 	fi
 done
 
